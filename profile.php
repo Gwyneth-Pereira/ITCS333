@@ -6,13 +6,15 @@ require 'connection.php';
 <html>
 <head>
     <meta charset="utf-8">
-    <title>My Project</title>
+    <title>My Profile</title>
     <?php include 'head.php'; ?>
 </head>
 <body>
     <?php include 'header.php'; ?>
 
-
+    <?php if (!$_SESSION['active']) {
+        header('location: notAuthorized.php');
+    } ?>
 
     <table border='1' align='center' width='300'>
         <tr>
@@ -25,26 +27,30 @@ require 'connection.php';
             <th>Remove</th>
         </tr>
     <?php
-    /*
-    The form has three actions:
-    1. Reset Password: should reset the password to abc123 (you need to hash it before storing it)
-    2. Update user details if there is a change in the data. (No Input validation is required)
-    3. Remove user record from the db.
-    */
-      if ($row = $rs->fetch()){
-        echo "<form method='post' action='domyrequest.php'>";
-        echo "<input type='hidden' name='uid' value='$row[0]' />\n";
-        echo "<tr>";
-        echo "<td><input name='n'  value='$row[1]' /></td>";
-        echo "<td><input name='un' value='$row[2]' /></td>";
-        echo "<td><input name='ut' value='$row[5]' /></td>";
-        echo "<td><input name='dob' value='".$row[4]."' />'</td>";
-        echo "<th><input type='submit' name='sb' value='Reset' /></th>";
-        echo "<th><input type='submit' name='sb' value='Update' /></th>";
-        echo "<th><input type='submit' name='sb' value='Delete' /></th>";
-        echo "</tr>";
-        echo "</form>";
-      }
+        $username = $_SESSION['username'];
+        $sql = $db->prepare("SELECT * FROM users WHERE User=?;");
+        $holder = $sql->execute(array($username));
+        
+        if ($info = $holder->fetch()){
+            echo "<tr>";
+                echo "<td>$info['Name']</td>";
+                echo "<td>$info['Username']</td>";
+                echo "<td>Password</td>";
+                echo "<td>$info['DOB']</td>";
+                echo "<th><input type='submit' name='sb' value='Reset' /></th>";
+                echo "<th><input type='submit' name='sb' value='Update' /></th>";
+                echo "<th><input type='submit' name='sb' value='Delete' /></th>";
+                
+                // echo "<input type='hidden' name='uid' value='$row[0]'/>\n";
+                // echo "<td><input name='n' value='$row[1]' /></td>";
+                // echo "<td><input name='un' value='$row[2]' /></td>";
+                // echo "<td><input name='ut' value='$row[5]' /></td>";
+                // echo "<td><input name='dob' value='".$row[4]."' />'</td>";
+                // echo "<th><input type='submit' name='sb' value='Reset' /></th>";
+                // echo "<th><input type='submit' name='sb' value='Update' /></th>";
+                // echo "<th><input type='submit' name='sb' value='Delete' /></th>";
+            echo "</tr>";
+        }
      ?>
     </table>
 

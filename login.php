@@ -11,7 +11,7 @@ require('connection.php');
 </head>
 <body>
 <?php 
-if($_SESSION['active']){
+if(!isset($_SESSION['active'])) {
 ?>
 	<form method="GET">
 		<p>Username:</p>
@@ -22,8 +22,9 @@ if($_SESSION['active']){
 	</form>
 <?php
 } 
-elseif($_SESSION['active']){	
-	echo "<h1 class='text-primary'>Hello <?php echo $_SESSION['username']; ?>, Welcome to the Auction System</h1>";
+elseif(isset($_SESSION['active']) && $_SESSION['active']){	
+	$username = $_SESSION['username'];
+	echo "<h1 class='text-primary'>Hello $username, Welcome to the Auction System</h1>";
 }
 elseif(isset($submit)){
 	try{
@@ -62,4 +63,3 @@ elseif(isset($submit)){
 // }
 ?>
 </body>
-</html>

@@ -13,7 +13,7 @@ session_start();
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav navbar-right ml-auto mr-5 align-items-center">
 			<li class="nav-item">
-				<a id="Home" class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
+				<a id="Home" class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<!-- <li class="nav-item dropdown">
 				<a id="Exercises" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" 
@@ -32,14 +32,14 @@ session_start();
 			</li> -->
 		<?php if (isset($_SESSION['Logged'])) {
 					echo '<li class="nav-item">';
-						echo '<a id="profile" class="nav-link" href="../account/profile.php">Profile</a>';
+						echo '<a id="profile" class="nav-link" href="profile.php">Profile</a>';
 					echo '</li>';
 			 } elseif (!isset($_SESSION['Logged'])) {
 					echo '<li class="nav-item">';
-						echo '<a id="login" class="nav-link" href="../account/login.php">Login</a>';
+						echo '<a id="login" class="nav-link" href="login.php">Login</a>';
 					echo '</li>';
 					echo '<li class="nav-item">';
-						echo '<a id="register" class="nav-link" href="../account/register.php">Register</a>';
+						echo '<a id="register" class="nav-link" href="register.php">Register</a>';
 					echo '</li>';
 			 } ?>
 		</ul>	

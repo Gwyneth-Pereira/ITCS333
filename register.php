@@ -1,12 +1,12 @@
 <?php
-session_start();
-require 'connection.php'; 
+// session_start();
+require 'connection.php';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>My Project</title>
+    <title>Register Page</title>
     <?php include 'head.php'; ?>
 </head>
 <body>
@@ -14,11 +14,18 @@ require 'connection.php';
 
 
     <form method="POST" action="signup.php">
-        <p>Name: <input name='name'/></p>
-        <p>Username: <input name='username'/></p>
-        <p>Password: <input type='password' name='password'/></p>
-        <p>Confirm Password: <input type='password' name='cpassword'/></p>
-        <p>Date of Birth: <input type="date" name="DOB"></p>
+        <p>Name:</p>
+        <p><input type='text' name='name'/></p>
+        <p>Email:</p>
+        <p><input type='email' name='email'/></p>
+        <p>Username:</p>
+        <p><input type='text' name='username'/></p>
+        <p>Password:</p>
+        <p><input type='password' name='password'/></p>
+        <p>Confirm Password:</p>
+        <p><input type='password' name='cpassword'/></p>
+        <p>Date of Birth:</p>
+        <p><input type="date" name="DOB"></p>
     </form>
 
     <?php include 'scripts.php'; ?>

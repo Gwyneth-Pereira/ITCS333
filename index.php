@@ -1,19 +1,25 @@
 <?php
-session_start();
-require 'php/connection.php'; 
+if (!isset($_SESSION['active'])) {
+	# code...
+	session_start();
+}
+require('connection.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>My Project</title>
-	<?php include 'php/head.php'; ?>
+	<?php include 'head.php'; ?>
 </head>
 <body>
-	<?php include 'php/header.php'; ?>
+	<?php include 'header.php'; ?>
+
+	<div class="container">
+		<h1>This is the home page</h1>
+	</div>
 
 
-
-	<?php include 'php/scripts.php'; ?>
+	<?php include 'scripts.php'; ?>
 </body>
 </html>
