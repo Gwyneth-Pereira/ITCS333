@@ -66,13 +66,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`) VALUES
-(1, 'admin', '*4ACFE3202A5FF5CF467898FC58AAB', 'admin', 'admin@admin.admin');
-
---
 -- Indexes for dumped tables
 --
 

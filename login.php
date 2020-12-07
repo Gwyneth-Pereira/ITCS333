@@ -8,12 +8,14 @@ require('connection.php');
 <html>
 <head>
 	<title>Login Page</title>
+	<?php include 'head.php'; ?>
 </head>
 <body>
+	<?php include 'header.php'; ?>
 <?php 
 if(!isset($_SESSION['active'])) {
 ?>
-	<form method="GET">
+	<form method="POST">
 		<p>Username:</p>
 		<p><input type="text" name="username"></p>
 		<p>Password:</p>
@@ -62,5 +64,6 @@ elseif(isset($submit)){
 // 	header('location: index.php');
 // }
 ?>
+	<?php include 'scripts.php'; ?>
 </body>
 </html>
