@@ -73,17 +73,18 @@ CREATE TABLE `products` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(355) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
+
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`) VALUES
-(1, 'admin', '*4ACFE3202A5FF5CF467898FC58AAB', 'admin', 'admin@admin.admin');
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin full new', 'admin@admin.net');
 
 --
 -- Indexes for dumped tables
@@ -107,23 +108,20 @@ ALTER TABLE `bidders`
 
 --
 -- Indexes for table `products`
+
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
---
 -- AUTO_INCREMENT for table `auctions`
 --
 ALTER TABLE `auctions`
@@ -164,6 +162,7 @@ ALTER TABLE `auctions`
 ALTER TABLE `bidders`
   ADD CONSTRAINT `bidders_ibfk_1` FOREIGN KEY (`auction`) REFERENCES `auctions` (`id`),
   ADD CONSTRAINT `bidders_ibfk_2` FOREIGN KEY (`bidder`) REFERENCES `users` (`username`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
