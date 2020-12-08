@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2020 at 10:56 PM
+-- Generation Time: Dec 08, 2020 at 12:59 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -34,8 +34,20 @@ CREATE TABLE `auctions` (
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `startprice` float NOT NULL,
-  `bid` float NOT NULL,
-  `bidder` varchar(30) NOT NULL
+  `status` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bidders`
+--
+
+CREATE TABLE `bidders` (
+  `id` int(11) NOT NULL,
+  `auction` int(11) NOT NULL,
+  `bidder` varchar(30) NOT NULL,
+  `bid` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -48,6 +60,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `details` varchar(200) NOT NULL,
+  `category` varchar(50) NOT NULL,
   `picture` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -66,6 +79,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`) VALUES
+(1, 'admin', '*4ACFE3202A5FF5CF467898FC58AAB', 'admin', 'admin@admin.admin');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -75,8 +95,15 @@ CREATE TABLE `users` (
 ALTER TABLE `auctions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owner` (`owner`),
-  ADD KEY `bidder` (`bidder`),
   ADD KEY `product` (`product`);
+
+--
+-- Indexes for table `bidders`
+--
+ALTER TABLE `bidders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auction` (`auction`),
+  ADD KEY `bidder` (`bidder`);
 
 --
 -- Indexes for table `products`
@@ -103,6 +130,12 @@ ALTER TABLE `auctions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `bidders`
+--
+ALTER TABLE `bidders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -123,8 +156,14 @@ ALTER TABLE `users`
 --
 ALTER TABLE `auctions`
   ADD CONSTRAINT `auctions_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`username`),
-  ADD CONSTRAINT `auctions_ibfk_2` FOREIGN KEY (`bidder`) REFERENCES `users` (`username`),
   ADD CONSTRAINT `auctions_ibfk_3` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `bidders`
+--
+ALTER TABLE `bidders`
+  ADD CONSTRAINT `bidders_ibfk_1` FOREIGN KEY (`auction`) REFERENCES `auctions` (`id`),
+  ADD CONSTRAINT `bidders_ibfk_2` FOREIGN KEY (`bidder`) REFERENCES `users` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
