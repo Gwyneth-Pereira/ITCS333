@@ -4,6 +4,10 @@ require('connection.php');
 extract($_POST);
 try{
     // simple validation, BUT REGEX IS REQUIRED!!
+    // if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)==''){
+    //     echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
+    // }
+    
     if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)==''){
         echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
     }
@@ -24,12 +28,12 @@ try{
         $db = null;
 
         if ($result==1)
+            $_SESSION['active'] = true;
+            $_SESSION['username'] = $username;
             header('location: index.php');
         else
             echo '<p>Something wrong happened... Please <a href="register.php">Try Again</a></p>';
         
-        $_SESSION['active'] = true;
-        $_SESSION['username'] = $username;
     }
 }
 catch(PDOException $ex) {
