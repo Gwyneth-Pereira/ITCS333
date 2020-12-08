@@ -1,9 +1,7 @@
-<?php 
-session_start();
-?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-black px-5">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black px-5 mb-5">
 	
-	<a class="navbar-brand" href="../index.php">Auction System</a>
+	<a class="navbar-brand" href="index.php">Auction System</a>
 	
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" 
 	aria-expanded="false" aria-label="Toggle navigation">
@@ -30,11 +28,11 @@ session_start();
 					<a class="dropdown-item" href="project.php">Project</a>
 				</div>
 			</li> -->
-		<?php if (isset($_SESSION['Logged'])) {
+		<?php if (isset($_SESSION['active'])) {
 					echo '<li class="nav-item">';
 						echo '<a id="profile" class="nav-link" href="profile.php">Profile</a>';
 					echo '</li>';
-			 } elseif (!isset($_SESSION['Logged'])) {
+			 } elseif (!isset($_SESSION['active'])) {
 					echo '<li class="nav-item">';
 						echo '<a id="login" class="nav-link" href="login.php">Login</a>';
 					echo '</li>';

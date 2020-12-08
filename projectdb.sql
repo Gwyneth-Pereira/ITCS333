@@ -2,8 +2,8 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 06, 2020 at 10:56 PM
+-- Host: 127.0.0.1
+-- Generation Time: Dec 06, 2020 at 09:47 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -24,45 +24,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auctions`
---
-
-CREATE TABLE `auctions` (
-  `id` int(11) NOT NULL,
-  `owner` varchar(30) NOT NULL,
-  `product` int(11) NOT NULL,
-  `start` datetime NOT NULL,
-  `end` datetime NOT NULL,
-  `startprice` float NOT NULL,
-  `bid` float NOT NULL,
-  `bidder` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `details` varchar(200) NOT NULL,
-  `picture` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(355) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -70,61 +40,21 @@ CREATE TABLE `users` (
 --
 
 --
--- Indexes for table `auctions`
---
-ALTER TABLE `auctions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `owner` (`owner`),
-  ADD KEY `bidder` (`bidder`),
-  ADD KEY `product` (`product`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `auctions`
---
-ALTER TABLE `auctions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `auctions`
---
-ALTER TABLE `auctions`
-  ADD CONSTRAINT `auctions_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`username`),
-  ADD CONSTRAINT `auctions_ibfk_2` FOREIGN KEY (`bidder`) REFERENCES `users` (`username`),
-  ADD CONSTRAINT `auctions_ibfk_3` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
