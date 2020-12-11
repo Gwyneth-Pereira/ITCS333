@@ -31,7 +31,12 @@
 		<?php if (isset($_SESSION['active'])) {
 					echo '<li class="nav-item">';
 						echo '<a id="profile" class="nav-link" href="profile.php">Profile</a>';
+						echo '</li><li>';
+						echo '<a id="profile" class="nav-link" href="messge.php">My Messages</a>';
 					echo '</li>';
+					echo '<li>';
+						echo '<a id="profile" class="nav-link" href="Accept.php">My prodect Accept </a>';
+						echo '</li>';
 			 } elseif (!isset($_SESSION['active'])) {
 					echo '<li class="nav-item">';
 						echo '<a id="login" class="nav-link" href="login.php">Login</a>';

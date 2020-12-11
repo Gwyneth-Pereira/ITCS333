@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 08, 2020 at 12:59 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: 127.0.0.1
+-- Generation Time: Dec 10, 2020 at 06:57 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -37,6 +38,13 @@ CREATE TABLE `auctions` (
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `auctions`
+--
+
+INSERT INTO `auctions` (`id`, `owner`, `product`, `start`, `end`, `startprice`, `status`) VALUES
+(1, 'a', 4, '2020-12-22 00:00:00', '2020-12-23 00:00:00', 22.2, 'good');
+
 -- --------------------------------------------------------
 
 --
@@ -47,8 +55,43 @@ CREATE TABLE `bidders` (
   `id` int(11) NOT NULL,
   `auction` int(11) NOT NULL,
   `bidder` varchar(30) NOT NULL,
-  `bid` float NOT NULL
+  `bid` float NOT NULL,
+  `history` varchar(255) NOT NULL,
+  `picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bidders`
+--
+
+INSERT INTO `bidders` (`id`, `auction`, `bidder`, `bid`, `history`, `picture`) VALUES
+(8, 1, 'a', 5, 'sadfds', 'laptop-about.jpg'),
+(9, 1, 'a', 5, 'asdf', 'laptop-about.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `hid` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `aid` int(11) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `history` varchar(255) NOT NULL,
+  `picture` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`hid`, `bid`, `aid`, `owner`, `history`, `picture`) VALUES
+(5, 5, 1, 'a', 'Accept', 'laptop-about.jpg'),
+(6, 5, 1, 'a', 'Accept', 'laptop-about.jpg'),
+(7, 5, 1, 'a', 'Accept', 'laptop-about.jpg'),
+(8, 5, 1, 'a', 'Accept', 'laptop-about.jpg');
 
 -- --------------------------------------------------------
 
@@ -58,11 +101,22 @@ CREATE TABLE `bidders` (
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `details` varchar(200) NOT NULL,
   `category` varchar(50) NOT NULL,
   `picture` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `uid`, `name`, `details`, `category`, `picture`) VALUES
+(1, 5, 'goodimg', 'goodprodecut', 'car', 'about-header.jpg'),
+(3, 1, 'wefadsf', 'waefdsaf', 'car', 'digitalmarketing.jpg'),
+(4, 5, 'werasdf', 'dsfasdf', 'car', 'laptop-about.jpg'),
+(5, 5, 'qwefs', 'wfdasf', 'car', 'unicorn.png');
 
 -- --------------------------------------------------------
 
@@ -83,7 +137,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`) VALUES
-(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin full new', 'admin@admin.net');
+(1, 'admin', 'c4ca4238a0b923820dcc509a6f75849b', 'admin full new', 'admin@admin.net'),
+(5, 'a', 'c4ca4238a0b923820dcc509a6f75849b', 'sdf', 'sadfw@hotmail.com'),
+(6, 'yousif', 'c4ca4238a0b923820dcc509a6f75849b', 'sare', 'yousif@hotmail.com'),
+(7, 'ali', 'c4ca4238a0b923820dcc509a6f75849b', 'as', 'wefasdf');
 
 --
 -- Indexes for dumped tables
@@ -103,13 +160,26 @@ ALTER TABLE `auctions`
 ALTER TABLE `bidders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `auction` (`auction`),
-  ADD KEY `bidder` (`bidder`);
+  ADD KEY `bidder` (`bidder`),
+  ADD KEY `picture` (`picture`);
+
+--
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`hid`),
+  ADD KEY `bid` (`bid`),
+  ADD KEY `owner` (`owner`),
+  ADD KEY `picture` (`picture`),
+  ADD KEY `history` (`history`),
+  ADD KEY `id` (`aid`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`uid`);
 
 --
 -- Indexes for table `users`
@@ -127,25 +197,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `auctions`
 --
 ALTER TABLE `auctions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bidders`
 --
 ALTER TABLE `bidders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `hid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

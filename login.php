@@ -16,9 +16,9 @@ require('connection.php');
 <?php 
 if(isset($login)){
 	try{
-		$hashed = sha1($password); // password_hash has an issue!... this is better function than md5 (more secure)
+		$hashed = md5($password); // password_hash has an issue!... this is better function than md5 (more secure)
 		$sql = $db->prepare("SELECT * FROM users WHERE username=? AND password=?;");
-		
+		$mysql= $db->query("SELECT * from users WHERE username='$username' AND password='$hashed' ");
 		if ($sql->execute(array($username, $hashed))){
 			if($sql->rowCount()==0){
 				header('location: login.php?error=incorrect');
@@ -26,7 +26,11 @@ if(isset($login)){
 			while($holder = $sql->fetch()){
 				$_SESSION['active'] = true;
 				$_SESSION['username'] = $username;
-				header('location: index.php');
+				foreach($mysql as $v){
+					$id=$v[0];
+				}
+				$_SESSION['id']=$id;
+				header("location: index.php");
 			}
 		}
 	}
