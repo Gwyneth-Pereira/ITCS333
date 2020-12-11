@@ -61,7 +61,7 @@ require('connection.php');
         require('connection.php');
     
         $s1=("SELECT * FROM history Where bid='$id'");
-    $quer=$db->query($s1);
+        $quer=$db->query($s1);
 
 //need check to get price of product afther Aceept or reject ????? check pleses;
 // i try to do it but diffuclt
@@ -87,14 +87,13 @@ foreach($price as $n)
         
     ?>
 <form method="post">
+    <div class="card">
+        <img src="images/<?php echo $picture; ?>" alt="Denim Jeans" style="width:100%">
+        <h1><?php echo $owner; ?></h1>
+        <p class="price"><?php echo $tpotalprice; ?></p>
 
-<div class="card">
-  <img src="images/<?php echo $picture; ?>" alt="Denim Jeans" style="width:100%">
-  <h1><?php echo $owner; ?></h1>
-  <p class="price"><?php echo $tpotalprice; ?></p>
- 
-  <p ><button ><input type="submit" value='Accept' name='add'/></button></p> 
-  <p > 
+        <p ><button ><input type="submit" value='Accept' name='add'/></button></p> 
+    </div>
 </form>
 <a href="edithistory.php?hid=<?php echo $hid; ?>" style='color:red'>Delect</a></p> 
 
