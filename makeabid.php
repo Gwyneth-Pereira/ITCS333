@@ -11,6 +11,7 @@ if (preg_match($bidpattern,$userbid)) {
 	try{
 
 		require('connection.php');
+		
 $sql="SELECT * FROM 'auctions' WHERE product=$pid";
 $r=$db->query($sql); 
 $prod=$r->fetch(PDO::FETCH_ASSOC);

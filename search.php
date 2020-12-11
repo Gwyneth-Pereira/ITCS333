@@ -1,6 +1,10 @@
-
 <?php
+
+
+
 //THIS HAS TO BE ADDED TO ANOTHER PAGE
+
+
 Extract($_POST);
 if(isset($submitSearch)){
 
