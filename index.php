@@ -1,7 +1,7 @@
 <?php
+session_start();
 if (!isset($_SESSION['active'])) {
 	# code...
-	session_start();
 }
 require('connection.php');
 ?>
