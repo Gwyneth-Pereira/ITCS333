@@ -16,13 +16,15 @@ if (!isset($_SESSION['active'])) {
 	<?php include 'header.php'; ?>
 
 	<div class="container">
-		<h1>Create your auction</h1>
+		<h1>Would you like pictures</h1>
 	</div>
 
 	<form method="POST" class="form-group w-25 mx-auto text-center" enctype="multipart/form-data">
         
     </form>
 
+	<a href="myAuctions.php?message=created">Skip For Now</a>
+	
 	<?php include 'scripts.php'; ?>
 </body>
 </html>

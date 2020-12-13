@@ -53,14 +53,15 @@ if(isset($bid)){
 			// $sql="SELECT * FROM 'auctions' WHERE product=$pid";
 			// $r=$db->query($sql); 
 			// $prod=$r->fetch();
-			if($userbid < $highestBid){
+			if($userbid > $highestBid){
 				$sql=$db->prepare("INSERT INTO bidders VALUES(NULL, :auction, :bidder, :bid)");
-				$sql->bindParam(':auction',$auctionid);
-				$sql->bindParam(':bidder',$bidder;
-				$sql->bindParam(':bid',$userbid);
+				$sql->bindParam(':auction', $auctionid);
+				$sql->bindParam(':bidder', $bidder);
+				$sql->bindParam(':bid', $userbid);
 				$sql->execute();
 				if ($sql->rowCount() == 1) {
-					$message = "";
+					header('location: myAuctions.php?message=bid');
+					exit;
 				}
 				else {
 					$message = "Sorry something went wrong... Please try again";
@@ -87,11 +88,6 @@ if(isset($bid)){
 <body>
 	<?php include 'header.php'; ?>
 	
-	<div>
-		<?php if (isset($message)) {
-			echo "<h2 class='text-warning'>$message</h2>";
-		} ?>
-	</div>
 
 	<form method="POST">
 		<label for="bid">Current Highest Bid: <?php echo $highestBid; ?></label>
@@ -104,6 +100,11 @@ if(isset($bid)){
 
 		<input type="number" name="userbid" min="<?php echo $highestBid; ?>" step="any" required> <!-- step=any for decimals  -->
 		<input type="submit" name="bid" value="Bid">
+		<div>
+			<?php if (isset($message)) {
+				echo "<h2 class='text-warning'>$message</h2>";
+			} ?>
+		</div>
 	</form>
 
 <?php include 'scripts.php'; ?>

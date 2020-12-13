@@ -2,6 +2,7 @@
 session_start();
 if (!isset($_SESSION['active'])) {
 	header('location: notAuthorized.php');
+	exit;
 }
 // require('connection.php');
 ?>
@@ -38,43 +39,45 @@ if (!isset($_SESSION['active'])) {
         <p>Product Details:</p>
         <p><textarea class="form-control" rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details"></textarea></p>
         
-		<p>Price:</p>
+		<p>Start Price:</p>
         <p><input class="form-control" type="number" step="any" name="price" placeholder="Price" required/></p>
         
 		<p>End Time/Date:</p>
-        <p><input type="datetime-local" id="end" name="end" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
+        <p><input type="datetime-local" id="end" name="end" step="1" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
          max="<?php echo (date('Y')+1).date('-m-d').'T'.date('H:i:s'); ?>" required></p>
         
         <p><input class="btn btn-danger" type="submit" name="submit" value="Create Auction"></p>
     </form>
 
 	<?php include 'scripts.php'; ?>
-</body>
-</html>
 
 <?php
-extract($_POST)
+extract($_POST);
 
 if (isset($submit)) {
 	try {
 		require('connection.php');
 		
+		$db->beginTransaction();
+		
 		$sql = $db->prepare("INSERT INTO products VALUES(NULL, ?, ?, ?, NULL)");
 		$sql->execute(array($name, $details, $category));
 		
-		$productid = $sql->lastInsertId();
+		$productid = $db->lastInsertId();
 		
 		$sql = $db->prepare("INSERT INTO auctions VALUES(NULL, ?, ?, NOW(), ?, ?, ?)");
 		$sql->execute(array($_SESSION['username'], $productid, $end, $price, 'active'));
-
-		$db=null;
+		
+		$db->commit();
+		// $db=null;
 	} catch (PDOException $ex) {
+		$db->rollBack();
 		echo $ex->getMessage();
 		exit;
 	}
 
-	header('location: uploadPictures.php?productid=productid');
-} else {
-	# code...
+	header('location: uploadPictures.php?productid=$productid');
 }
 ?>
+</body>
+</html>

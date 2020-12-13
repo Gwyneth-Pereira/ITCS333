@@ -25,7 +25,7 @@ session_start();
     <?php 
             try {
                 require('connection.php');
-                $auctions = $db->prepare("SELECT * FROM auctions"); // maybe better to add WHERE status=active
+                $auctions = $db->prepare("SELECT * FROM auctions WHERE status='active'"); // maybe better to add WHERE status=active
                 $auctions->execute();
                 foreach ($auctions as $auction){
                     $auctionid = $auction['id'];
