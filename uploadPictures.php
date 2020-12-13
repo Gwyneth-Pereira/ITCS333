@@ -19,7 +19,7 @@ if (!isset($_SESSION['active'])) {
 		<h1>Create your auction</h1>
 	</div>
 
-	<form method="POST" class="form-group w-25 mx-auto text-center">
+	<form method="POST" class="form-group w-25 mx-auto text-center" enctype="multipart/form-data">
         
     </form>
 
