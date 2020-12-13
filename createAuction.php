@@ -38,6 +38,7 @@ if (!isset($_SESSION['active'])) {
         <p>Price:</p>
         <p><input class="form-control" type="text" name="price" placeholder="Price"/></p>
         <p>End Time/Date:</p>
+
         <p><input type="datetime-local" id="meeting-time" name="meeting-time" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
          max="<?php echo (date('Y')+1).date('-m-d').'T'.date('H:i:s'); ?>"></p>
         
