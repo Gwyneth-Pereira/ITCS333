@@ -73,7 +73,7 @@ if (isset($submit)) {
 		exit;
 	}
 
-	header('location: uploadPictures?productid=productid');
+	header('location: uploadPictures.php?productid=productid');
 } else {
 	# code...
 }
