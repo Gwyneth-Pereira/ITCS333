@@ -22,11 +22,9 @@ require 'connection.php';
         <!-- <p>Username:</p> -->
         <p><input class="form-control" type='text' name='username' placeholder="Username"/></p>
         <!-- <p>Password:</p> -->
-        <p><input class="form-control" type='password' name='password' placeholder="Password"/></p>
+        <p><input class="form-control" minlength="8" type='password' name='password' placeholder="Password"/></p>
         <!-- <p>Confirm Password:</p> -->
-        <p><input class="form-control" type='password' name='cpassword' placeholder="Confirm Password"/></p>
-        <!-- <p>Date of Birth:</p> -->
-        <p><input class="form-control" type="date" name="DOB" placeholder="Date of Birth"></p>
+        <p><input class="form-control" minlength="8" type='password' name='cpassword' placeholder="Confirm Password"/></p>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Sign Up"></p>
     </form>
 
