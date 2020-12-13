@@ -5,82 +5,79 @@
 //THIS HAS TO BE ADDED TO ANOTHER PAGE
 
 
-Extract($_POST);
+extract($_POST);
 if(isset($submitSearch)){
 
 $regexSearchPattern=TRUE; //SEARCH PATTERN GOES HERE
 if(preg_match($regexSearchPattern, $searchfield))
-{try{
+{
+	try{
+		$searchterms = explode(' ', $searchfield); // multiple terms in the field
 
-$searchterms = explode(' ', $searchfield);//multiple terms in the field
+		//Basic:
+		$sql="SELECT * FROM 'products' WHERE 'name' LIKE ";
+		$i=0;
+		foreach ($searchterms as $term) {
+			if ($i=0) { //first term
+				$sql.="'%".$term."%'";
+				$i++;
+			}
+			else 
+			{
+				$sql.=" OR 'name' LIKE '%".$term."%' ";
+			}
+		}
+
+		require('connection.php');
+
+			$r=$db->query($sql); 
+			$searchResults=$r->fetch(PDO::FETCH_ASSOC);
 
 
-//Basic:
-$sql="SELECT * FROM 'products' WHERE 'name' LIKE ";
-$i=0;
-foreach ($searchterms as $term) {
-	if ($i=0) { //first term
-		$sql.="'%".$term."%'";
-		$i++;
+			if($searchResults==null)
+				echo "No such product exists";
+
+		else {
+			$sql="SELECT * FROM 'auctions' WHERE 'product'=";	
+			$i=0;
+			foreach ($searchResults as $pr) {
+			if ($i=0) { //first term
+				$sql.="$pr['id']";
+				$i++;
+			}
+			else 
+			{
+				$sql.=" OR 'product'='".$pr['id']."' ";
+			}
+			}
+
+			$r=$db->query($sql); 
+
+		foreach ($r as $rs) { //displaying all auctions
+			echo "Product: ".$rs['product'];
+			echo "Owner: ".$rs['owner'];
+			echo "Auction start date: ".$rs['start'];
+			echo "Auction end date: ".$rs['end'];
+			echo "Starting price: ".$rs['startprice'];
+			echo "Current Bid: ".$rs['bid'];
+		}
+		}//end of else 
+		$db=null;
+
+
+
+
+
+
+		//ADVANCED SEARCH GOES HERE 
+
+
+
+
+
+	} catch(PDOExecption $e){
+	die ("ERROR:".$e->getMessage());
 	}
-	else 
-	{
-		$sql.=" OR 'name' LIKE '%".$term."%' ";
-	}
-}
-
-require('connection.php');
-
-	$r=$db->query($sql); 
-	$searchResults=$r->fetch(PDO::FETCH_ASSOC);
-
-
-	if($searchResults==null)
-		echo "No such product exists";
-
-else {
-	$sql="SELECT * FROM 'auctions' WHERE 'product'=";	
-	$i=0;
-	foreach ($searchResults as $pr) {
-	if ($i=0) { //first term
-		$sql.="$pr['id']";
-		$i++;
-	}
-	else 
-	{
-		$sql.=" OR 'product'='".$pr['id']."' ";
-	}
-	}
-
-	$r=$db->query($sql); 
-
-foreach ($r as $rs) { //displaying all auctions
-	echo "Product: ".$rs['product'];
-	echo "Owner: ".$rs['owner'];
-	echo "Auction start date: ".$rs['start'];
-	echo "Auction end date: ".$rs['end'];
-	echo "Starting price: ".$rs['startprice'];
-	echo "Current Bid: ".$rs['bid'];
-}
-}//end of else 
-$db=null;
-
-
-
-
-
-
-//ADVANCED SEARCH GOES HERE 
-
-
-
-
-
-}//end of try
-
-catch(PDOExecption $e){
- die ("ERROR:".$e->getMessage());
-}
 
 } // end of if regexpattern
 
@@ -97,7 +94,7 @@ else
 <html>
 <body>
 
-<form method=“post”>
+<form method="POST">
 	<label for='Search'>Search: </label><input type='text' name='searchfield'>
 	<select name='Categories[]'>
 		<option value='All'>All Categories</option>
