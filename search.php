@@ -22,8 +22,7 @@ if(preg_match($regexSearchPattern, $searchfield))
 				$sql.="'%".$term."%'";
 				$i++;
 			}
-			else 
-			{
+			else {
 				$sql.=" OR 'name' LIKE '%".$term."%' ";
 			}
 		}

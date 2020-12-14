@@ -1,8 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['active'])) {
-	# code...
-}
+
+// No need here to check logging in... because guests can browse... but not bid... logging verifying should be in bid.php
+// if (!isset($_SESSION['active'])) { 
+// 	header('location: notAuthorized.php');
+// 	exit;
+// }
 
 ?>
 <!DOCTYPE html>
@@ -22,9 +25,10 @@ if (!isset($_SESSION['active'])) {
     <?php 
             try {
                 require('connection.php');
-                $auctions = $db->prepare('SELECT * FROM auctions');
+                $auctions = $db->prepare("SELECT * FROM auctions WHERE status='active'"); // maybe better to add WHERE status=active
                 $auctions->execute();
                 foreach ($auctions as $auction){
+                    $auctionid = $auction['id'];
                     $productid = $auction['product'];
                     $products = $db->prepare("SELECT * FROM products WHERE id=?");
                     $products->execute(array($productid));
@@ -39,7 +43,8 @@ if (!isset($_SESSION['active'])) {
                             echo "<div class='card-body'>";
                             echo "<h5 class='card-title'>$name</h5>";
                             echo "<p class='card-text'>$details</p>";
-                            echo "<a href='viewAuction.php' class='btn btn-primary'>View Details</a>"; // view picture, owner, start price, highest bid, all details, start/end date+time, AND BID BUTTON
+                            // view picture, owner, start price, highest bid, all details, start/end date+time, AND BID BUTTON
+                            echo "<a href='viewAuction.php?auctionid=$auctionid&productid=$productid' class='btn btn-primary'>View Details</a>"; 
                             echo "</div>";
                         echo "</div>";
                     }
@@ -49,7 +54,6 @@ if (!isset($_SESSION['active'])) {
                 echo $ex->getMessage();
             }
             ?>
-        
     </div>
 
 	<?php include 'scripts.php'; ?>
