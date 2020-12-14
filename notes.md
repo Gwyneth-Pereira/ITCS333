@@ -12,7 +12,6 @@
 # Agenda
 1. Pictures Upload
 1. Auction Search function
-1. Test Insertion
 1. Sara Checking
 
 <br>
