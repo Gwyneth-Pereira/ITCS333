@@ -14,7 +14,7 @@ try{
     else if ($password!=$cpassword)
         echo "Passwords don't match";
     else {
-        $hashed = password_hash($password, PASSWORD_DEFAULT); // this is better function than md5 (more secure)
+        $hashed = sha1($password); // this is better function than md5 and password_hash (more secure)
         // $dob="$y-$m-$d"; // maybe this is needed to be inserted in the database
         $sql = $db->prepare("INSERT INTO users VALUES(NULL, :username, :hashed, :name, :email);");
         
@@ -27,10 +27,11 @@ try{
         $result = $sql->execute();
         $db = null;
 
-        if ($result==1)
+        if ($result==1){
             $_SESSION['active'] = true;
             $_SESSION['username'] = $username;
             header('location: index.php');
+        }
         else
             echo '<p>Something wrong happened... Please <a href="register.php">Try Again</a></p>';
         
