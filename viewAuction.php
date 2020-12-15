@@ -21,20 +21,21 @@ extract($_REQUEST);
 
 <?php  
 try{
-	//product ID has to be extracted 
 	require('connection.php');
-	$sql = $db->prepare("SELECT * FROM auctions WHERE product=?");
-	$sql->execute(array($productid));
-	$auctions = $sql->fetch(PDO::FETCH_ASSOC);
 	
+	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
+	$sql->execute(array($auctionid));
+	$auctions = $sql->fetch(PDO::FETCH_ASSOC);
+
+	$productid = $auctions['product'];
+
 	$sql = $db->prepare("SELECT * FROM products WHERE id=?"); //might change with what attribute submitted
 	$sql->execute(array($productid));
 	$products = $sql->fetch(PDO::FETCH_ASSOC);
 	
 	// Retrieving highest bid and bidder
-	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
-	$sql->execute(array($auctionid));
-	if ($auction = $sql->fetch()) {
+	
+	if ($auction = $auctions) {
 		$highestBid = $auction['bid'];
 		$highestBidder = $auction['bidder'];
 	}
@@ -75,7 +76,7 @@ try{
 	// $hours=gmdate("G", $auctions['end'] - time());
 	// $minutes=gmdate("i", $auctions['end'] - time());
 	// echo $hours." hours and ".$minutes." minutes left";
-	echo "<p><a href='bid.php?auctionid=$auctionid&productid=$productid'>Bid on Auction</a></p>"; // THIS WILL CHANGE WITH JS
+	echo "<p><a href='bid.php?auctionid=$auctionid'>Bid on Auction</a></p>"; // THIS WILL CHANGE WITH JS
 
 	$db=null;
 } catch(PDOExecption $e){

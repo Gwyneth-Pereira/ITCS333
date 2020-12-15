@@ -96,9 +96,9 @@ else
 	<select name='Categories[]'>
 		<option value='all'>All Categories</option>
 	</select><br/>  
-	<!-- <input type='radio' name='search-type' value='All'>All -->
-	<!-- <input type='radio' name='search-type' value='Products'>Products -->
-	<!-- <input type='radio' name='search-type' value='Owners'>Owners -->
+	<input type='radio' name='search-type' value='All'>All
+	<input type='radio' name='search-type' value='Products'>Products
+	<input type='radio' name='search-type' value='Owners'>Owners
 	<br/> 
 	<label for='Sort-By'>Sort By: </label>
 	<select name='Sort-by[]'>
