@@ -1,7 +1,5 @@
 <?php
 
-
-
 //THIS HAS TO BE ADDED TO ANOTHER PAGE
 
 
@@ -96,11 +94,11 @@ else
 <form method="POST">
 	<label for='Search'>Search: </label><input type='text' name='searchfield'>
 	<select name='Categories[]'>
-		<option value='All'>All Categories</option>
+		<option value='all'>All Categories</option>
 	</select><br/>  
-	<input type='radio' name='search-type' value='All'>All
-	<input type='radio' name='search-type' value='Products'>Products
-	<input type='radio' name='search-type' value='Owners'>Owners
+	<!-- <input type='radio' name='search-type' value='All'>All -->
+	<!-- <input type='radio' name='search-type' value='Products'>Products -->
+	<!-- <input type='radio' name='search-type' value='Owners'>Owners -->
 	<br/> 
 	<label for='Sort-By'>Sort By: </label>
 	<select name='Sort-by[]'>
@@ -108,7 +106,7 @@ else
 		<option value='highest'>Highest Bids</option>
 		<option value='lowest'>Lowest Bids</option>
 		<option value='ending'>Ending Soon</option>
-	</select><br/>  
+	</select><br/>
 <input type='submit' name='submitSearch' value='Search'>
 </form>
 </body>

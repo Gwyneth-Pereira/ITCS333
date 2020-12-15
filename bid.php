@@ -10,14 +10,11 @@ try {
 	require('connection.php');
 	
 	// Retrieving highest bid and bidder
-	$sql = $db->prepare("SELECT * FROM bidders WHERE auction=?");
+	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
 	$sql->execute(array($auctionid));
-	$highestBid = 0;
-	while ($holder = $sql->fetch()) {
-		if ($highestBid < $holder['bid']) {
-			$highestBid = $holder['bid'];
-			$highestBidder = $holder['bidder'];
-		}
+	if ($auction = $sql->fetch()) {
+		$highestBid = $auction['bid'];
+		$highestBidder = $auction['bidder'];
 	}
 } catch (PDOException $ex) {
 	echo $ex->getMessage();
@@ -54,10 +51,10 @@ if(isset($bid)){
 			// $r=$db->query($sql); 
 			// $prod=$r->fetch();
 			if($userbid > $highestBid){
-				$sql=$db->prepare("INSERT INTO bidders VALUES(NULL, :auction, :bidder, :bid)");
-				$sql->bindParam(':auction', $auctionid);
-				$sql->bindParam(':bidder', $bidder);
+				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
 				$sql->bindParam(':bid', $userbid);
+				$sql->bindParam(':bidder', $bidder);
+				$sql->bindParam(':auction', $auctionid);
 				$sql->execute();
 				if ($sql->rowCount() == 1) {
 					header('location: myAuctions.php?message=bid');
@@ -90,7 +87,13 @@ if(isset($bid)){
 	
 
 	<form method="POST">
-		<label for="bid">Current Highest Bid: <?php echo $highestBid; ?></label>
+		<label for="bid">Current Highest Bid: 
+		<?php if (isset($highestBid)) {
+			echo $highestBid;
+		} else {
+			echo "No Bids Yet!";
+		}
+		?></label>
 		<div><?php if(isset($error)){ echo "<p class='text-danger'>$error</p>"; } ?></div>
 		<label for="bid">Your Bid: </label>
 		<!-- pid = product id  -->
@@ -98,7 +101,7 @@ if(isset($bid)){
 		<input type='hidden' name='bidder' value='<?php echo $_SESSION['username']; ?>'>
 		<input type='hidden' name='auctionid' value='<?php echo $auctionid; ?>'>
 
-		<input type="number" name="userbid" min="<?php echo $highestBid; ?>" step="any" required> <!-- step=any for decimals  -->
+		<input type="number" name="userbid" min="<?php echo $highestBid; ?>" step="any" required><!-- step=any for decimals  -->
 		<input type="submit" name="bid" value="Bid">
 		<div>
 			<?php if (isset($message)) {

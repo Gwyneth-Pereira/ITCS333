@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2020 at 12:05 AM
+-- Generation Time: Dec 15, 2020 at 12:25 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -34,6 +34,8 @@ CREATE TABLE `auctions` (
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `startprice` float NOT NULL,
+  `bid` float DEFAULT NULL,
+  `bidder` varchar(30) DEFAULT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -41,30 +43,31 @@ CREATE TABLE `auctions` (
 -- Dumping data for table `auctions`
 --
 
-INSERT INTO `auctions` (`id`, `owner`, `product`, `start`, `end`, `startprice`, `status`) VALUES
-(1, 'admin', 1, '2020-12-12 03:31:32', '2021-01-08 03:29:29', 250.25, 'active'),
-(2, 'admin', 2, '2020-12-12 03:31:32', '2020-12-15 03:29:29', 230.5, 'active');
+INSERT INTO `auctions` (`id`, `owner`, `product`, `start`, `end`, `startprice`, `bid`, `bidder`, `status`) VALUES
+(1, 'admin', 1, '2020-12-12 03:31:32', '2021-01-08 03:29:29', 250.25, NULL, NULL, 'active'),
+(2, 'admin', 2, '2020-12-12 03:31:32', '2020-12-15 03:29:29', 230.5, NULL, NULL, 'active'),
+(3, 'admin', 3, '2020-12-14 18:03:38', '2020-12-31 18:03:35', 250.325, NULL, NULL, 'active');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bidders`
+-- Table structure for table `pictures`
 --
 
-CREATE TABLE `bidders` (
+CREATE TABLE `pictures` (
   `id` int(11) NOT NULL,
-  `auction` int(11) NOT NULL,
-  `bidder` varchar(30) NOT NULL,
-  `bid` float NOT NULL
+  `product` int(11) NOT NULL,
+  `picture` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `bidders`
+-- Dumping data for table `pictures`
 --
 
-INSERT INTO `bidders` (`id`, `auction`, `bidder`, `bid`) VALUES
-(1, 1, 'user', 350),
-(2, 2, 'user', 345);
+INSERT INTO `pictures` (`id`, `product`, `picture`) VALUES
+(1, 1, 'images/products/pic16079709988254689885fd7b0b6ca221.jpeg'),
+(2, 1, 'images/products/pic160797099811339726625fd7b0b6cb53a.jpg'),
+(3, 1, 'images/products/pic16079709981863486265fd7b0b6cc51b.jpg');
 
 -- --------------------------------------------------------
 
@@ -76,17 +79,17 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `details` varchar(200) NOT NULL,
-  `category` varchar(50) NOT NULL,
-  `picture` varchar(100) DEFAULT NULL
+  `category` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `details`, `category`, `picture`) VALUES
-(1, 'p1', 'Product1', 'Art', ''),
-(2, 'p2', 'Product2', 'Electronics', '');
+INSERT INTO `products` (`id`, `name`, `details`, `category`) VALUES
+(1, 'p1', 'Product1', 'Art'),
+(2, 'p2', 'Product2', 'Electronics'),
+(3, 'adfa', 'asdfasd', 'Books');
 
 -- --------------------------------------------------------
 
@@ -123,12 +126,11 @@ ALTER TABLE `auctions`
   ADD KEY `product` (`product`);
 
 --
--- Indexes for table `bidders`
+-- Indexes for table `pictures`
 --
-ALTER TABLE `bidders`
+ALTER TABLE `pictures`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `auction` (`auction`),
-  ADD KEY `bidder` (`bidder`);
+  ADD KEY `product` (`product`);
 
 --
 -- Indexes for table `products`
@@ -152,19 +154,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `auctions`
 --
 ALTER TABLE `auctions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `bidders`
+-- AUTO_INCREMENT for table `pictures`
 --
-ALTER TABLE `bidders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `pictures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -184,11 +186,10 @@ ALTER TABLE `auctions`
   ADD CONSTRAINT `auctions_ibfk_3` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
 
 --
--- Constraints for table `bidders`
+-- Constraints for table `pictures`
 --
-ALTER TABLE `bidders`
-  ADD CONSTRAINT `bidders_ibfk_1` FOREIGN KEY (`auction`) REFERENCES `auctions` (`id`),
-  ADD CONSTRAINT `bidders_ibfk_2` FOREIGN KEY (`bidder`) REFERENCES `users` (`username`);
+ALTER TABLE `pictures`
+  ADD CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -32,14 +32,11 @@ try{
 	$products = $sql->fetch(PDO::FETCH_ASSOC);
 	
 	// Retrieving highest bid and bidder
-	$sql = $db->prepare("SELECT * FROM bidders WHERE auction=?");
+	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
 	$sql->execute(array($auctionid));
-	$highestBid = 0;
-	while ($holder = $sql->fetch()) {
-		if ($highestBid < $holder['bid']) {
-			$highestBid = $holder['bid'];
-			$highestBidder = $holder['bidder'];
-		}
+	if ($auction = $sql->fetch()) {
+		$highestBid = $auction['bid'];
+		$highestBidder = $auction['bidder'];
 	}
 
 	echo "<h1>Auction Details:</h1>";
@@ -48,20 +45,31 @@ try{
 	//echo "<img src=picturefile/".$products['picture'].">";
 	echo "<h3>Product:</h3>";
 	echo $products['name'];
+	
 	echo "<h3>Category:</h3>";
 	echo $products['category'];
+	
 	echo "<h3>Product Details:</h3>";
 	echo $products['details'];
+	
 	echo "<h3>Owner:</h3>";
 	echo $auctions['owner'];
+	
 	echo "<h3>Starting Bid:</h3>";
 	echo $auctions['startprice'];
+	
 	echo "<h3>Current Highest Bid:</h3>";
-	echo "$highestBid by $highestBidder";
+	if (isset($highestBid)) {
+		echo "$highestBid by $highestBidder";
+	} else {
+		echo "No Bids Yet!";
+	}
+	
 	echo "<h3>Start date:</h3>";
 	echo $auctions['start'];
 	echo "<h3>End date:</h3>";
 	echo $auctions['end'];
+	
 	// echo "<h3>Time Left:</h3>";
 	// //Assign timezone????
 	// $hours=gmdate("G", $auctions['end'] - time());
