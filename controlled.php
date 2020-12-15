@@ -1,4 +1,5 @@
 <?php 
+//active -> pending -> successful/failed
 date_default_timezone_set("Asia/Bahrain");
 try{
     require('connection.php');
@@ -10,7 +11,7 @@ try{
         $current=UNIX_TIMESTAMP(date('Y-m-d H:i:s'));
         $auctionid = $row['id'];
         if($current>$endttime){
-            $newsql="UPDATE auctions SET status='not active' WHERE id=$auctionid";
+            $newsql="UPDATE auctions SET status='pending' WHERE id=$auctionid";
             $update=$db->exec($newsql);
         }
     }
