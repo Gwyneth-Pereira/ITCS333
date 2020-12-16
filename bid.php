@@ -4,8 +4,8 @@ if (!isset($_SESSION['active'])) {
 	header('location: notAuthorized.php');
 	exit;
 }
+require('controlled.php');
 extract($_REQUEST);
-
 try {
 	require('connection.php');
 	

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require('controlled.php');
 // No need here to check logging in... because guests can browse... but not bid... logging verifying should be in bid.php
 // if (!isset($_SESSION['active'])) { 
 // 	header('location: notAuthorized.php');
@@ -28,7 +28,9 @@ session_start();
                 require('connection.php');
                 $auctions = $db->prepare("SELECT * FROM auctions WHERE status='active'"); // maybe better to add WHERE status=active
                 $auctions->execute();
+                $i = 0;
                 foreach ($auctions as $auction){
+                    $i++;
                     $auctionid = $auction['id'];
                     $productid = $auction['product'];
                     $products = $db->prepare("SELECT * FROM products WHERE id=?");
@@ -49,7 +51,7 @@ session_start();
                             echo "<img src='images/products/default-image.png' class='card-img-top' style='height: 300px;'>"; 
                         } else {
                             // include picture/Carousel of pictures
-                            echo '<div id="carousel" class="carousel slide" data-ride="carousel">';
+                            echo '<div id="carousel'.$i.'" class="carousel slide" data-ride="carousel">';
                             echo '<div class="carousel-inner card-img-top" style="height: 300px;">';
                             $first = true;
                             foreach ($pictures as $holder) {
@@ -65,11 +67,11 @@ session_start();
                             }
                             echo '</div>';
                             echo '</div>';
-                            echo '<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">';
+                            echo '<a class="carousel-control-prev" href="#carousel'.$i.'" role="button" data-slide="prev">';
                                 echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
                                 echo '<span class="sr-only">Previous</span>';
                             echo '</a>';
-                            echo '<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">';
+                            echo '<a class="carousel-control-next" href="#carousel'.$i.'" role="button" data-slide="next">';
                                 echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
                                 echo '<span class="sr-only">Next</span>';
                             echo '</a>';

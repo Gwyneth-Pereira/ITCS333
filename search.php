@@ -2,8 +2,11 @@
 
 //THIS HAS TO BE ADDED TO ANOTHER PAGE
 
-
 extract($_POST);
+
+// Make sure to include this and to search WHERE status='active'
+require('controlled.php');
+
 if(isset($submitSearch)){
 
 $regexSearchPattern=TRUE; //SEARCH PATTERN GOES HERE

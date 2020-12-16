@@ -4,6 +4,7 @@ if (!isset($_SESSION['active'])) {
 	# code...
 }
 require('connection.php');
+require('controlled.php');
 ?>
 <!DOCTYPE html>
 <html>

@@ -8,7 +8,7 @@ try{
 	//     echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
 	// }
 
-	if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)=='') {
+	if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='') {
 		echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
 	}
 	else if ($password!=$cpassword)

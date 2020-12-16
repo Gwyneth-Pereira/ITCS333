@@ -1,5 +1,7 @@
 <?php
 session_start();
+require('controlled.php');
+extract($_REQUEST);
 
 // No need here to check logging in... because guests can browse... but not bid... logging verifying should be in bid.php
 // if (!isset($_SESSION['active'])) { 
@@ -7,7 +9,6 @@ session_start();
 // 	exit;
 // }
 
-extract($_REQUEST);
 ?>
 <!DOCTYPE html>
 <html>
