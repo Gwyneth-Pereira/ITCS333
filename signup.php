@@ -3,7 +3,7 @@ session_start();
 require('connection.php');
 extract($_POST);
 
-$namepattern="/^[a-z]{3,30}$/i";
+$namepattern="/^[a-zA-Z]{​​​​​3,}​​​​​(?: [a-zA-Z]+){​​​​​0,1}​​​​​$/";
 $emailpattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/";
 $usernamepattern="/^[a-zA-Z0-9_.-]{4,30}$/";
 $passwordpattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";

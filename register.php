@@ -13,7 +13,7 @@ require 'connection.php';
         var nameFlag=emailFlag=usernameFlag=passwordFlag=false;
 
         function checkName(name){
-          var nameExp=/^[a-z]{3,30}$/i;
+          var nameExp=/^[a-zA-Z]{​​​​​3,}​​​​​(?: [a-zA-Z]+){​​​​​0,1}​​​​​$/;
           if (name.length==0){
             m="";
             nameFlag=false;
