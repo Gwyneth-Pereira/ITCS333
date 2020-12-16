@@ -3,6 +3,7 @@ session_start();
 require('connection.php');
 extract($_POST);
 try{
+	//check if email and username already exist. USE HEADER AND PASS ERRORS
 	// simple validation, BUT REGEX IS REQUIRED!!
 	// if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)==''){
 	//     echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
