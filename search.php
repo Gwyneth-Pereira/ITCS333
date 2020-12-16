@@ -1,6 +1,7 @@
 <?php 
 extract($_REQUEST);
 
+
 if(isset($searchfield)){
 trim($searchfield);
 
@@ -55,19 +56,15 @@ if ($prods==null) {
 }
 	}//try
 
-
 	catch(PDOExecption $e){
 		die ("ERROR:".$e->getMessage());
 	}
 
 
 }
-
-
 else 
 	echo "invalid search";
 
 
 }//if isset searchfield
-
 ?>
