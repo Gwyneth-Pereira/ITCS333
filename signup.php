@@ -2,39 +2,63 @@
 session_start();
 require('connection.php');
 extract($_POST);
-try{
-	//check if email and username already exist. USE HEADER AND PASS ERRORS
-	// simple validation, BUT REGEX IS REQUIRED!!
-	// if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)==''){
-	//     echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
-	// }
 
-	if (trim($name)=='' ||  trim($email)=='' ||  trim($username)=='' || trim($password)=='' || trim($cpassword)=='' || trim($DOB)=='') {
-		echo '<p>You Are Missing Information Please <a href="register.php">Try Again</a></p>';
+$namepattern="/^[a-z]{3,30}$/i";
+$emailpattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/";
+$usernamepattern="/^[a-zA-Z0-9_.-]{4,30}$/";
+$passwordpattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
+
+try{
+	//check if email and username already exist
+	
+	if ($JSEnabled=="FALSE"){ // PHP VALIDATION
+		if (trim($name)=='' || trim($email)=='' || trim($username)=='' || trim($password)=='' || trim($cpassword)==''){
+			header('location:register.php?error=missing');
+			exit;
+		}
+		else if (!preg_match($namepattern,$name)){
+			header('location:register.php?error=wrongname');
+			exit;	
+		}
+		else if (!preg_match($emailpattern,$email)){
+			header('location:register.php?error=wrongemail');
+			exit;
+		}
+		else if (!preg_match($usernamepattern,$username)){
+			header('location:register.php?error=wrongusername');
+			exit;
+		}
+		else if (!preg_match($passwordpattern,$password)){
+			header('location:register.php?error=wrongpassword');
+			exit;
+		}
+		else if ($password!=$cpassword){
+			header('location:register.php?error=mismatch');
+			exit;
+	  }
 	}
-	else if ($password!=$cpassword)
-		echo "Passwords don't match";
-	else {
+
+	else{
 		$hashed = sha1($password); // this is better function than md5 and password_hash (more secure)
-		// $dob="$y-$m-$d"; // maybe this is needed to be inserted in the database
 		$sql = $db->prepare("INSERT INTO users VALUES(NULL, :username, :hashed, :name, :email);");
 
 		$sql->bindParam(':username', $username);
 		$sql->bindParam(':hashed', $hashed);
 		$sql->bindParam(':name', $name);
 		$sql->bindParam(':email', $email);
-		// $sql->bindParam(':DOB', $DOB);
+		
 
 		$result = $sql->execute();
 		$db = null;
 
-		if ($result==1) {
+		if ($result==1){
 			$_SESSION['active'] = true;
 			$_SESSION['username'] = $username;
 			header('location: index.php');
 		}
-		else
+		else{
 			echo '<p>Something wrong happened... Please <a href="register.php">Try Again</a></p>';
+		}
 
 	}
 }
