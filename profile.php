@@ -1,7 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION['active'])) {
+	header('location: notAuthorized.php');
+    exit;
+}
 extract($_REQUEST);
-require 'connection.php';
+require('connection.php');
+require('controlled.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -85,7 +90,7 @@ require 'connection.php';
 					echo "<th colspan='2'>Update</th>";
 					echo "</tr>";
 					$username = $_SESSION['username'];
-					$sql = $db->prepare("SELECT * FROM users WHERE username=?;");
+					$sql = $db->prepare("SELECT * FROM users WHERE username=?");
 					
 					if ($sql->execute(array($username))){
 						while ($info = $sql->fetch()) {   

@@ -1,115 +1,70 @@
-<?php
+<?php 
+extract($_REQUEST);
 
 
+if(isset($searchfield)){
+trim($searchfield);
 
-//THIS HAS TO BE ADDED TO ANOTHER PAGE
-
-
-extract($_POST);
-if(isset($submitSearch)){
-
-$regexSearchPattern=TRUE; //SEARCH PATTERN GOES HERE
-if(preg_match($regexSearchPattern, $searchfield))
-{
+$regexsearchpattern="/[a-z0-9]/i";
+if (preg_match($regexsearchpattern, $searchfield)) {
 	try{
-		$searchterms = explode(' ', $searchfield); // multiple terms in the field
-
-		//Basic:
-		$sql="SELECT * FROM 'products' WHERE 'name' LIKE ";
-		$i=0;
-		foreach ($searchterms as $term) {
-			if ($i=0) { //first term
-				$sql.="'%".$term."%'";
-				$i++;
-			}
-			else {
-				$sql.=" OR 'name' LIKE '%".$term."%' ";
-			}
-		}
+		$searchTerms=explode(" ", $searchfield);
 
 		require('connection.php');
-
-			$r=$db->query($sql); 
-			$searchResults=$r->fetch(PDO::FETCH_ASSOC);
-
-
-			if($searchResults==null)
-				echo "No such product exists";
-
-		else {
-			$sql="SELECT * FROM 'auctions' WHERE 'product'=";	
-			$i=0;
-			foreach ($searchResults as $pr) {
-			if ($i=0) { //first term
-				$sql.="$pr['id']";
-				$i++;
-			}
-			else 
-			{
-				$sql.=" OR 'product'='".$pr['id']."' ";
-			}
-			}
-
-			$r=$db->query($sql); 
-
-		foreach ($r as $rs) { //displaying all auctions
-			echo "Product: ".$rs['product'];
-			echo "Owner: ".$rs['owner'];
-			echo "Auction start date: ".$rs['start'];
-			echo "Auction end date: ".$rs['end'];
-			echo "Starting price: ".$rs['startprice'];
-			echo "Current Bid: ".$rs['bid'];
+$prods=null;
+$auctions=null;
+		$sql="SELECT * FROM products WHERE name LIKE ?";
+		$stmt=$db->prepare($sql);
+		if($stmt->execute(array("%".$searchfield."%")))
+		{
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		 	$prods[]=$row;
+		}				
 		}
-		}//end of else 
-		$db=null;
+	if($prods!=null){
+		$sql="SELECT * FROM auctions WHERE product=?";
+		$stmt=$db->prepare($sql);
+		foreach ($prods as $pID) {
+			if($stmt->execute(array($pID['id']))){
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		 		$auctions[]=$row;
+				}
+
+			}
+		}
 
 
 
 
+		//displaying search results:
+		for ($i=0; $i <sizeof($auctions) ; $i++) {
+			echo '<a href=viewAuction.php?pid='.$prods[$i]['id'].">";
+			echo "<li><u>".$prods[$i]['name']."</u></li>";
+			echo "<li>Auction No. ".$auctions[$i]['id']."</li>";
+			echo "<li>Details: ".$prods[$i]['details']."</li>";
+			echo "<li>Status:".$auctions[$i]['status']."</li>";
+			echo '</a>';
+		}
+		//echo "<a>view all search results</a>";
 
 
-		//ADVANCED SEARCH GOES HERE 
+	}//if product is found
 
+if ($prods==null) {
+	echo "No such product exists\n";
+	echo "<a href>Browse all Products</a>";
+}
+	}//try
 
-
-
-
-	} catch(PDOExecption $e){
-	die ("ERROR:".$e->getMessage());
+	catch(PDOExecption $e){
+		die ("ERROR:".$e->getMessage());
 	}
 
-} // end of if regexpattern
 
+}
 else 
-	echo "Invalid search";
+	echo "invalid search";
 
 
-
-
-
-}//end of if submitted
-
+}//if isset searchfield
 ?>
-<html>
-<body>
-
-<form method="POST">
-	<label for='Search'>Search: </label><input type='text' name='searchfield'>
-	<select name='Categories[]'>
-		<option value='All'>All Categories</option>
-	</select><br/>  
-	<input type='radio' name='search-type' value='All'>All
-	<input type='radio' name='search-type' value='Products'>Products
-	<input type='radio' name='search-type' value='Owners'>Owners
-	<br/> 
-	<label for='Sort-By'>Sort By: </label>
-	<select name='Sort-by[]'>
-		<option value='recent'>Most Recent Bids</option>	
-		<option value='highest'>Highest Bids</option>
-		<option value='lowest'>Lowest Bids</option>
-		<option value='ending'>Ending Soon</option>
-	</select><br/>  
-<input type='submit' name='submitSearch' value='Search'>
-</form>
-</body>
-</html>
