@@ -21,6 +21,7 @@ $auctions=null;
 		 	$prods[]=$row;
 		}				
 		}
+
 	if($prods!=null){
 		$sql="SELECT * FROM auctions WHERE product=?";
 		$stmt=$db->prepare($sql);
@@ -33,16 +34,12 @@ $auctions=null;
 			}
 		}
 
-
-
-
 		//displaying search results:
-		for ($i=0; $i <sizeof($auctions) ; $i++) {
-			echo '<a href=viewAuction.php?pid='.$prods[$i]['id'].">";
+		for ($i=0; $i <sizeof($prods) ; $i++) {
+			echo '<a href=viewAuction.php?pid='.$prods[$i]['id']."&auctionid=".$auctions[$i]['id'].">";
 			echo "<li><u>".$prods[$i]['name']."</u></li>";
-			echo "<li>Auction No. ".$auctions[$i]['id']."</li>";
 			echo "<li>Details: ".$prods[$i]['details']."</li>";
-			echo "<li>Status:".$auctions[$i]['status']."</li>";
+			//echo "<li>Status:".$auctions[$i]['status']."</li>";
 			echo '</a>';
 		}
 		//echo "<a>view all search results</a>";
