@@ -93,7 +93,7 @@ require('controlled.php');
 					echo "</tr>";
 					$username = $_SESSION['username'];
 					$sql = $db->prepare("SELECT * FROM users WHERE username=?");
-					if ($sql->execute(array('admin'))){
+					if ($sql->execute(array($_SESSION['username']))){
 						while ($info = $sql->fetch(PDO::FETCH_ASSOC)) {   
 							echo "<tr>";
 							echo "<td>".$info['name']."</td>";
