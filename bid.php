@@ -16,8 +16,10 @@ try {
 	if ($auction = $sql->fetch()) {
 		$highestBid = $auction['bid'];
 		$highestBidder = $auction['bidder'];
+		$startingprice=$auction['startprice'];	
 	}
-} catch (PDOException $ex) {
+} 
+catch (PDOException $ex) {
 	echo $ex->getMessage();
 	exit;
 }
@@ -51,13 +53,15 @@ if(isset($bid)){
 			// $sql="SELECT * FROM 'auctions' WHERE product=$pid";
 			// $r=$db->query($sql); 
 			// $prod=$r->fetch();
-			if($userbid > $highestBid){
+			echo $userbid;
+			echo $bidder;
+			echo $auctionid;
+			if($userbid > $highestBid&&$userbid>$startingprice){
 				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
 				$sql->bindParam(':bid', $userbid);
 				$sql->bindParam(':bidder', $bidder);
 				$sql->bindParam(':auction', $auctionid);
-				$sql->execute();
-				if ($sql->rowCount() == 1) {
+				if ($sql->execute()) {
 					header('location: myAuctions.php?message=bid');
 					exit;
 				}
