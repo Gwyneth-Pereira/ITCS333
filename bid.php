@@ -37,9 +37,9 @@ if(isset($makebid))
 			$prod=$r->fetch();
 			if($prod['bid']<=$userbid){
 				$bidPreparedStatement=$db->prepare("INSERT INTO 'bidders' VALUES(NULL, :auction, :bidder, :bid)");
-				$bidPreparedStatement->blindParam(':auction',$auctionID);
-				$bidPreparedStatement->blindParam(':bidder',$_SESSION['username']);
-				$bidPreparedStatement->blindParam(':bid',$bid);
+				$bidPreparedStatement->bindParam(':auction',$auctionID);
+				$bidPreparedStatement->bindParam(':bidder',$_SESSION['username']);
+				$bidPreparedStatement->bindParam(':bid',$bid);
 				$bidPreparedStatement->execute();
 			}
 			else 

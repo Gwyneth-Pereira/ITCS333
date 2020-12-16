@@ -17,10 +17,10 @@ try{
 
 	//product ID has to be extracted 
 	require('connection.php');
-	$sql= "SELECT * FROM 'auctions' WHERE product=$pid";
+	$sql= "SELECT * FROM auctions WHERE product=$pid";
 		$r=$db->query($sql); 
 		$au=$r->fetch(PDO::FETCH_ASSOC);
-	$sql= "SELECT * FROM 'products' WHERE id=$pid"; //might change with what attribute submitted 
+	$sql= "SELECT * FROM products WHERE id=$pid"; //might change with what attribute submitted 
 		$r=$db->query($sql); 
 		$pr=$r->fetch(PDO::FETCH_ASSOC);
 
@@ -31,7 +31,7 @@ try{
 	echo "<h3>Product:</h3>";
 	echo $pr['name'];
 	echo "<h3>Category:</h3>";
-	echo $pr['Category'];
+	echo $pr['category'];
 	echo "<h3>Product Details:</h3>";
 	echo $pr['details'];
 	echo "<h3>Starting Bid:</h3>";

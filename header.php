@@ -1,4 +1,5 @@
 
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-black px-5 mb-5">
 	
 	<a class="navbar-brand" href="index.php">Auction System</a>
@@ -10,9 +11,13 @@
 	
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav navbar-right ml-auto mr-5 align-items-center">
+			<?php echo '<li class="nav-item">';
+			include('search.html');
+			echo '</li>';?>
 			<li class="nav-item">
 				<a id="Home" class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
 			</li>
+
 			<!-- <li class="nav-item dropdown">
 				<a id="Exercises" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" 
 				aria-haspopup="true" aria-expanded="false">
@@ -32,13 +37,18 @@
 					echo '<li class="nav-item">';
 						echo '<a id="profile" class="nav-link" href="profile.php">Profile</a>';
 					echo '</li>';
-			 } elseif (!isset($_SESSION['active'])) {
+
+
+				}
+
+			 elseif (!isset($_SESSION['active'])) {
 					echo '<li class="nav-item">';
 						echo '<a id="login" class="nav-link" href="login.php">Login</a>';
 					echo '</li>';
 					echo '<li class="nav-item">';
 						echo '<a id="register" class="nav-link" href="register.php">Register</a>';
 					echo '</li>';
+
 			 } ?>
 		</ul>	
 	</div>
