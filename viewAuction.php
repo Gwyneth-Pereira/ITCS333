@@ -23,6 +23,7 @@ extract($_REQUEST);
 <?php  
 try{
 	require('connection.php');
+
 	
 	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
 	$sql->execute(array($auctionid));
@@ -50,7 +51,7 @@ try{
 	
 	echo "<h3>Category:</h3>";
 	echo $products['category'];
-	
+
 	echo "<h3>Product Details:</h3>";
 	echo $products['details'];
 	

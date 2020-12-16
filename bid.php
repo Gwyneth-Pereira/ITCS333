@@ -4,6 +4,7 @@ if (!isset($_SESSION['active'])) {
 	header('location: notAuthorized.php');
 	exit;
 }
+
 require('controlled.php');
 extract($_REQUEST);
 try {
@@ -66,6 +67,7 @@ if(isset($bid)){
 			}
 			else 
 				$error = "Please enter a higher bid than the current highest bid!";
+
 
 			$db=null;
 		} catch(PDOExecption $e){
