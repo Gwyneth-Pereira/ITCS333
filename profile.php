@@ -146,11 +146,11 @@ require('controlled.php');
 				<form onSubmit="return checkUserInputs();" method="POST" action="updateuser.php" class="form-group w-50 mx-auto text-left">
 					<h1 class="font-weight-bold mb-4 text-center">Update Account Information</h1>
 					<label class="h5 mt-0">Username</label>
-					<p><input class="form-control " type='text' name='username' value="<?php echo $username; ?>" onkeyup="checkUsername(this.value)"/><span id='umsg'></span></p>
+					<p><input class="form-control " type='text' name='username' required value="<?php echo $username; ?>" onkeyup="checkUsername(this.value)"/><span id='umsg'></span></p>
 					<label class="h5 mt-0">Full Name:</label>
-					<p><input class="form-control " type='text' name='name' value="<?php echo $name; ?>" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
+					<p><input class="form-control " type='text' name='name' required value="<?php echo $name; ?>" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
 					<label class="h5 mt-0">Email:</label>
-					<p><input class="form-control " type='email' name='email' value="<?php echo $email; ?>" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
+					<p><input class="form-control " type='email' name='email' required value="<?php echo $email; ?>" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
 					<input type='hidden' name='JSEnabled' value='FALSE' />
 					<?php
 					if (isset($error) && $error=='missing'){
@@ -175,11 +175,11 @@ require('controlled.php');
 				<form onSubmit="return checkUserInputs();" method="POST" action="updateuser.php" class="form-group w-25 mx-auto text-center">
 					<h1 class="font-weight-bold mb-5">Change Password</h1>
 					<!-- <label class="h5 mt-0">Old Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='oldpassword' placeholder="Current Password"/></p>
+					<p><input class="form-control form-control-lg" type='password' name='oldpassword' placeholder="Current Password" required/></p>
 					<!-- <label class="h5 mt-0">New Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='password' placeholder="New Password" onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
+					<p><input class="form-control form-control-lg" type='password' name='password' placeholder="New Password" required onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
 					<!-- <label class="h5 mt-0">Confirm Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='cpassword' placeholder="Confirm Password"/></p>
+					<p><input class="form-control form-control-lg" type='password' name='cpassword' placeholder="Confirm Password" required/></p>
 					<input type='hidden' name='JSEnabled' value='FALSE' />
 					<?php 
 					if (isset($error) && $error=='missing'){

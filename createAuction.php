@@ -133,7 +133,8 @@ if (isset($submit)){
         
 		<p class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
         <p>
-        	<select class="form-control" type='text' name='category' placeholder="Category">
+        	<select class="form-control" type='text' name='category' placeholder="Category" required>
+				<option value="null">Please Select</option>
 				<option>Art</option>
 				<option>Books</option>
 				<option>Clothings</option>
@@ -146,7 +147,7 @@ if (isset($submit)){
         	</select>
         </p>
         <p class="h5 text-left font-weight-bold mt-4">Product Details:</p>
-        <p><textarea class="form-control" rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></p>
+        <p><textarea class="form-control" required rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></p>
         
 		<p class="h5 text-left font-weight-bold mt-4">Start Price:</p>
         <div class="input-group mb-3">

@@ -175,13 +175,13 @@ if(isset($auctionid)){
     <form method="POST" class="form-group w-25 mx-auto text-center" onSubmit="return checkUserInputs();">
         <h1 class="font-weight-bold mb-4">Complete Transaction</h1>
         <!-- <p>Full Name:</p> -->
-        <p><input class="form-control" type="text" name="name" placeholder="Full Name" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
+        <p><input class="form-control" required type="text" name="name" placeholder="Full Name" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
         <!-- <p>Contact Number:</p> -->
-        <p><input class="form-control" type="text" name="number" placeholder="Contact Number"onkeyup="checkNumber(this.value)"/><span id='nummsg'></span></p>
+        <p><input class="form-control" required type="text" name="number" placeholder="Contact Number"onkeyup="checkNumber(this.value)"/><span id='nummsg'></span></p>
         <!-- <p>Email:</p> -->
-        <p><input class="form-control" type="email" name="email" placeholder="Email" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
+        <p><input class="form-control" required type="email" name="email" placeholder="Email" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
         <!-- <p>Address:</p> -->
-        <p><textarea name="address" cols="30" rows="10" placeholder="Delivery Address" onkeyup="checkAddress(this.value)"></textarea><span id='amsg'></span></p>
+        <p><textarea name="address" required cols="30" rows="10" placeholder="Delivery Address" onkeyup="checkAddress(this.value)"></textarea><span id='amsg'></span></p>
         <!-- <p>Hidden Auction ID:</p> -->
         <p><input  type="hidden" name="auctionid" value="$auctionid"/></p>
         <input type='hidden' name='JSEnabled' value='FALSE'/>
