@@ -46,6 +46,7 @@ require 'connection.php';
         <p><input class="form-control" minlength="8" type='password' name='password' placeholder="Password" onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
         <!-- <p>Confirm Password:</p> -->
         <p><input class="form-control" minlength="8" type='password' name='cpassword' placeholder="Confirm Password"/></p>
+        <input type='hidden' name='JSEnabled' value='FALSE' />
         <h3 class='text-danger mb-4 mt-4'><?php echo $msg;?></h3>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Sign Up"></p>
     </form>
