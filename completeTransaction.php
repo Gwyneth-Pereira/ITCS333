@@ -74,7 +74,7 @@ extract($_REQUEST);
         
         function checkAddress(address){
             var addressExp=/^(.|\s)*[a-zA-Z]{3,200}(.|\s)*$/;
-            if (adress.length==0){
+            if (address.length==0){
             m="";
             addressFlag=false;
             }
