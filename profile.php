@@ -116,7 +116,7 @@ require('controlled.php');
     <?php include 'header.php'; ?>
 
     <?php if (!$_SESSION['active']) {
-        header('location: notAuthorized.php');
+		header('location: notAuthorized.php');
     } ?>
 	<div class="container">
 		<div class="row">
@@ -128,10 +128,11 @@ require('controlled.php');
 					echo '<h2 class="text-danger text-center">Sorry Update Failed!</h2>';
 				?>
 
-			<?php
+				<?php
 				if (isset($infoupdate)) {
 					$username = $_SESSION['username'];
 					try {
+						require('connection.php');
 						$info = $db->query("SELECT * FROM users WHERE username='$username';");
 						if ($holder = $info->fetch()) {
 							$name = $holder['name'];
@@ -202,34 +203,33 @@ require('controlled.php');
 				else {
 					try{
 						require('connection.php');
-					echo "<table border='1' align='center' width='300'>";
-					echo "<tr>";
-					echo "<th>Name</th>";
-					echo "<th>Username</th>";
-					echo "<th>Email</th>";
-					echo "<th colspan='2'>Update</th>";
-					echo "</tr>";
-					$username = $_SESSION['username'];
-					$sql = $db->prepare("SELECT * FROM users WHERE username=?");
-					if ($sql->execute(array($_SESSION['username']))){
-						while ($info = $sql->fetch(PDO::FETCH_ASSOC)) {   
-							echo "<tr>";
-							echo "<td>".$info['name']."</td>";
-							echo "<td>".$info['username']."</td>";
-							echo "<td>".$info['email']."</td>";
-							echo "<td><form method='POST'><input type='submit' name='infoupdate' value='Change Information'/></form></td>";
-							echo "<td><form method='POST'><input type='submit' name='passwordchange' value='Change Password'/></form></td>";
-							echo "</tr>";
+						echo "<table border='1' align='center' width='300'>";
+						echo "<tr>";
+						echo "<th>Name</th>";
+						echo "<th>Username</th>";
+						echo "<th>Email</th>";
+						echo "<th colspan='2'>Update</th>";
+						echo "</tr>";
+						$username = $_SESSION['username'];
+						$sql = $db->prepare("SELECT * FROM users WHERE username=?");
+						if ($sql->execute(array($_SESSION['username']))){
+							while ($info = $sql->fetch(PDO::FETCH_ASSOC)) {   
+								echo "<tr>";
+								echo "<td>".$info['name']."</td>";
+								echo "<td>".$info['username']."</td>";
+								echo "<td>".$info['email']."</td>";
+								echo "<td><form method='POST'><input type='submit' name='infoupdate' value='Change Information'/></form></td>";
+								echo "<td><form method='POST'><input type='submit' name='passwordchange' value='Change Password'/></form></td>";
+								echo "</tr>";
+							}
 						}
+						echo "</table>";
 					}
-					echo "</table>";
+					catch(PDOExecption $e){
+						die ("ERROR:".$e->getMessage());
+					}
 				}
-			catch(PDOExecption $e){
-		die ("ERROR:".$e->getMessage());
-			}
-			}
 				?>
-
 			</div>
 			<div class="col-6">
 
