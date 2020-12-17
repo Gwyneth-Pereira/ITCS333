@@ -25,7 +25,7 @@ try {
     $bidsCount = $sql->rowCount();
 
     $sql="SELECT * FROM auctions WHERE bidder='$username' AND status='pending'";
-    $rs=$db->query($sql);
+    $rows=$db->query($sql);
 
     $db=null;
 } catch (PDOException $ex) {
@@ -162,18 +162,25 @@ function displayBiddings($myBids){
 }
 
 function displayHistory(){
-    if ($rs->rowCount() > 0){
-        foreach($rs as $rows){
-            $prodsql="SELECT * FROM products WHERE id=$rows[2]";
-            $prods=$db->query($prodsql);
-            $picsql="SELECT * FROM pictures WHERE product=$rows[2]";
-            $pics=$db->query($picsql);
+    global $rows;
+    if ($rows->rowCount() > 0){
+        foreach($rows as $row){
+            try {
+                require('connection.php');
+                $prodsql="SELECT * FROM products WHERE id=$row[2]";
+                $prods=$db->query($prodsql);
+                $picsql="SELECT * FROM pictures WHERE product=$row[2]";
+                $pics=$db->query($picsql);
+            } catch (PDOException $ex) {
+                echo $ex->getMessage();
+                exit;
+            }
 
-            echo $rows['owner'];
+            echo $row['owner'];
 
-            if ($rows=$prods->fetch()){
-                echo $rows['name']."</br>";
-                echo $rows['category']."</br>";
+            if ($row=$prods->fetch()){
+                echo $row['name']."</br>";
+                echo $row['category']."</br>";
             }
             
             $first = true;
@@ -194,13 +201,13 @@ function displayHistory(){
 <!DOCTYPE html>
 <html>
     <head>
-	<meta charset="utf-8">
-	<title>My Auctions</title>
+    <meta charset="utf-8">
+    <title>My Auctions</title>
     <?php include 'head.php'; ?>
     <link rel="stylesheet" type="text/css" href="css/scroller.css">
 </head>
 <body>
-	<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
     <div class="container">
         <div>
             <?php if (isset($message) && $message=='created') {
@@ -266,6 +273,6 @@ function displayHistory(){
         </div>
     </div>
 
-	<?php include 'scripts.php'; ?>
+    <?php include 'scripts.php'; ?>
 </body>
 </html>
