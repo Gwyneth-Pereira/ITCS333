@@ -32,25 +32,6 @@ if(isset($bid)){
 		
 		// if (preg_match($bidpattern,$userbid)) {
 		try{			
-			// require('connection.php');
-			
-			// Approach 1 with updating auction price in auctions table 
-			// $sql="SELECT * FROM 'auctions' WHERE product=$pid";
-			// $r=$db->query($sql); 
-			// $prod=$r->fetch(PDO::FETCH_ASSOC);
-			// if($prod['bid']<=$userbid){
-			// 	$bidPreparedStatement=$db->prepare("UPDATE 'auctions' SET bid=? WHERE product=?");
-			// 	$bidPreparedStatement->bindParam(1,$userbid);
-			// 	$bidPreparedStatement->bindParam(2,$pid);
-			// 	$bidPreparedStatement->execute();
-			// }
-			// else 
-			// 	echo "Your bid is lower than the existing bid";
-
-			// Approach 2 with keeping track of all bids in bidders table
-			// $sql="SELECT * FROM 'auctions' WHERE product=$pid";
-			// $r=$db->query($sql); 
-			// $prod=$r->fetch();
 			if($userbid > $highestBid){
 				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
 				$sql->bindParam(':bid', $userbid);
