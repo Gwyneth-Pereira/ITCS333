@@ -11,9 +11,15 @@
 session_start();
 extract($_REQUEST);
 date_default_timezone_set("Asia/Bahrain");
+if (!isset($_SESSION['active'])) {
+    header('location: notAuthorized.php');
+    exit;
+}
 $u1= $_SESSION['username'];
 // $t=date("D,d-n-y,h:i:s A");
-$auctionid=6;
+
+$auctionid=6;// remove this line @IBRAHIMMMMMMMMMMMMMMM :)
+	
 	try 
 	{	
 		require("connection.php");
@@ -31,7 +37,7 @@ $auctionid=6;
 		$row->bindParam(':aid',$auctionid);
 		$row->execute();
 		
-		$db->commit();
+		$db->commit(); 
 	}
 	catch (PDOException $ex) 
 	{
@@ -50,12 +56,19 @@ $auctionid=6;
 	
 	while($r=$row->fetch())
 			{
-				echo "<p><b>".$r['username']." </b></p>";
+				
+				echo "<p ><b>".$r['username']." </b></p>";
 				echo "<p style='font-size:20px'>".$r['message']."</p>";
 				echo "<p style='font-size:10px'>".$r['time']."</p></br>";
+				
 			}
+			echo "<div id='newmsg'>";
+			echo "</div>";
 	?>
 	</div>
+<script>
+ document.getElementById('newmsg').scrollIntoView();
+</script>
 	<form method="POST">
 	     <input name="usermsg" id="usermsg" type="text" />
         <input type="submit" name="submitmsg" id="submit" value="Send" />
