@@ -3,7 +3,7 @@ session_start();
 require('connection.php');
 extract($_POST);
 
-$namepattern="/^[a-zA-Z]{​​​​​3,}​​​​​(?: [a-zA-Z]+){​​​​​0,1}​​​​​$/";
+$namepattern="/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/";
 $emailpattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/";
 $usernamepattern="/^[a-zA-Z0-9_.-]{4,30}$/";
 $passwordpattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
@@ -37,7 +37,6 @@ try{
 			exit;
 	  }
 	}
-
 	else{
 		$hashed = sha1($password); // this is better function than md5 and password_hash (more secure)
 		$sql = $db->prepare("INSERT INTO users VALUES(NULL, :username, :hashed, :name, :email);");
