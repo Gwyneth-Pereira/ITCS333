@@ -68,17 +68,14 @@ if (isset($submit)){
 		if (trim($name)=='' || trim($details)=='' || trim($price)==''){
 			header('location:createAuction.php?error=missing');
 			exit;
-			//$msg="Missing Information";
 		}
 		elseif(!preg_match($productpattern,$name)){
 			header('location:createAuction.php?error=wrongname');
 			exit;
-			//$msg="Product name must be a minimum of 3 characters";
 		}
 		elseif(!preg_match($detailspattern,$details)){
 			header('location:createAuction.php?error=wrongdetails');
 			exit;
-			//$msg="Description must be a minimum of 3 and maximum of 200 characters, with at least 3 letters";
 		}
 	}
 
