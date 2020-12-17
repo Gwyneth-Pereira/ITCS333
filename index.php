@@ -1,7 +1,7 @@
 <?php
+session_start();
 if (!isset($_SESSION['active'])) {
 	# code...
-	session_start();
 }
 require('connection.php');
 ?>
@@ -17,9 +17,15 @@ require('connection.php');
 
 	<div class="container">
 		<h1>This is the home page</h1>
+
+
+	<h2>Search</h2>
+	<form action="">
+		<input type="search">
+		<input type="submit">
+	</form>
+
 	</div>
-
-
 	<?php include 'scripts.php'; ?>
 </body>
 </html>
