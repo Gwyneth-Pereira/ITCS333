@@ -1,5 +1,7 @@
 <?php
 session_start();
+require('controlled.php');
+extract($_REQUEST);
 
 // No need here to check logging in... because guests can browse... but not bid... logging verifying should be in bid.php
 // if (!isset($_SESSION['active'])) { 
@@ -7,7 +9,6 @@ session_start();
 // 	exit;
 // }
 
-extract($_REQUEST);
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,6 +23,7 @@ extract($_REQUEST);
 <?php  
 try{
 	require('connection.php');
+
 	
 	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
 	$sql->execute(array($auctionid));
@@ -49,7 +51,7 @@ try{
 	
 	echo "<h3>Category:</h3>";
 	echo $products['category'];
-	
+
 	echo "<h3>Product Details:</h3>";
 	echo $products['details'];
 	

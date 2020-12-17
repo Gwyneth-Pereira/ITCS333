@@ -2,8 +2,8 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 16, 2020 at 12:13 AM
+-- Host: localhost
+-- Generation Time: Dec 16, 2020 at 10:46 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -108,6 +108,22 @@ INSERT INTO `products` (`id`, `name`, `details`, `category`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `product` int(11) NOT NULL,
+  `question` varchar(500) NOT NULL,
+  `asker` varchar(150) NOT NULL,
+  `answer` varchar(500) NOT NULL,
+  `questiondate` datetime NOT NULL,
+  `answerdate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -168,6 +184,14 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product` (`product`),
+  ADD KEY `asker` (`asker`);
+
+--
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -205,6 +229,12 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -232,6 +262,13 @@ ALTER TABLE `auctions`
 --
 ALTER TABLE `pictures`
   ADD CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `asker` FOREIGN KEY (`asker`) REFERENCES `users` (`username`),
+  ADD CONSTRAINT `product` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `transactions`

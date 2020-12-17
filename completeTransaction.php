@@ -1,4 +1,5 @@
 <?php
+session_start();
 extract($_REQUEST);
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@ extract($_REQUEST);
     <meta charset="utf-8">
     <title>Complete Transaction</title>
     <?php include 'head.php'; ?>
-
+    
 	<script>
         var nameFlag=numberFlag=emailFlag=addressFlag=false;
 
@@ -98,29 +99,31 @@ extract($_REQUEST);
     </script>
 
 </head>
-</html>
-
-<?php
+<body>
+    <?php include 'header.php'; ?>
+    
+    
+    <?php
 if(isset($submit)){
     $namepattern="/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/";
     $numberpattern="/^((\+|00)973)?\s?\d{8}$/";
     $emailpattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/";
     $addresspattern="/^(.|\s)*[a-zA-Z]{3,200}(.|\s)*$/";
 	if ($JSEnabled=="FALSE"){
-		if (trim($name)=='' || trim($number)=='' || trim($email)=='' || trim($address)==''){
-			header('location:completeTransaction.php?error=missing');
+        if (trim($name)=='' || trim($number)=='' || trim($email)=='' || trim($address)==''){
+            header('location:completeTransaction.php?error=missing');
 			exit;
 		}
 		elseif(!preg_match($namepattern,$name)){
-			header('location:completeTransaction.php?error=wrongname');
+            header('location:completeTransaction.php?error=wrongname');
 			exit;
 		}
 		elseif(!preg_match($numberpattern,$number)){
-			header('location:completeTransaction.php?error=wrongnumber');
+            header('location:completeTransaction.php?error=wrongnumber');
 			exit;
         }
         elseif(!preg_match($emailpattern,$email)){
-			header('location:completeTransaction.php?error=wrongemail');
+            header('location:completeTransaction.php?error=wrongemail');
 			exit;
         }
         elseif(!preg_match($addresspattern,$address)){
@@ -153,14 +156,14 @@ if(isset($submit)){
 }
 
 if(isset($auctionid)){
-?>
+    ?>
     <?php
     $msg="";
 	if(isset($error)&& $error=='missing'){
-		$msg="Missing Information";
+        $msg="Missing Information";
 	}
 	elseif(isset($error)&& $error=='wrongname'){
-		$msg="Please enter your first and last name seperated by a space";
+        $msg="Please enter your first and last name seperated by a space";
 	}
 	elseif(isset($error)&& $error=='wrongnumber'){
         $msg="Invalid Number";
@@ -175,19 +178,23 @@ if(isset($auctionid)){
     <form method="POST" class="form-group w-25 mx-auto text-center" onSubmit="return checkUserInputs();">
         <h1 class="font-weight-bold mb-4">Complete Transaction</h1>
         <!-- <p>Full Name:</p> -->
-        <p><input class="form-control" type="text" name="name" placeholder="Full Name" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
+        <p><input class="form-control" required type="text" name="name" placeholder="Full Name" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
         <!-- <p>Contact Number:</p> -->
-        <p><input class="form-control" type="text" name="number" placeholder="Contact Number"onkeyup="checkNumber(this.value)"/><span id='nummsg'></span></p>
+        <p><input class="form-control" required type="text" name="number" placeholder="Contact Number"onkeyup="checkNumber(this.value)"/><span id='nummsg'></span></p>
         <!-- <p>Email:</p> -->
-        <p><input class="form-control" type="email" name="email" placeholder="Email" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
+        <p><input class="form-control" required type="email" name="email" placeholder="Email" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
         <!-- <p>Address:</p> -->
-        <p><textarea name="address" cols="30" rows="10" placeholder="Delivery Address" onkeyup="checkAddress(this.value)"></textarea><span id='amsg'></span></p>
+        <p><textarea class="form-control" required name="address" cols="30" rows="10" placeholder="Delivery Address" onkeyup="checkAddress(this.value)"></textarea><span id='amsg'></span></p>
         <!-- <p>Hidden Auction ID:</p> -->
         <p><input  type="hidden" name="auctionid" value="$auctionid"/></p>
         <input type='hidden' name='JSEnabled' value='FALSE'/>
         <h3 class='text-danger mb-4 mt-4'><?php echo $msg;?></h3>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Complete"></p>
     </form>
-<?php    
+    <?php    
 }
 ?>
+    
+    <?php include 'scripts.php'; ?>
+</body>
+</html>

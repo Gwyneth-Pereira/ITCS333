@@ -1,6 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION['active'])) {
+	header('location: notAuthorized.php');
+    exit;
+}
 extract($_REQUEST);
+
+require('controlled.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -110,7 +116,7 @@ extract($_REQUEST);
     <?php include 'header.php'; ?>
 
     <?php if (!$_SESSION['active']) {
-        header('location: notAuthorized.php');
+		header('location: notAuthorized.php');
     } ?>
 	<div class="container">
 		<div class="row">
@@ -122,10 +128,11 @@ extract($_REQUEST);
 					echo '<h2 class="text-danger text-center">Sorry Update Failed!</h2>';
 				?>
 
-			<?php
+				<?php
 				if (isset($infoupdate)) {
 					$username = $_SESSION['username'];
 					try {
+						require('connection.php');
 						$info = $db->query("SELECT * FROM users WHERE username='$username';");
 						if ($holder = $info->fetch()) {
 							$name = $holder['name'];
@@ -140,11 +147,11 @@ extract($_REQUEST);
 				<form onSubmit="return checkUserInputs();" method="POST" action="updateuser.php" class="form-group w-50 mx-auto text-left">
 					<h1 class="font-weight-bold mb-4 text-center">Update Account Information</h1>
 					<label class="h5 mt-0">Username</label>
-					<p><input class="form-control " type='text' name='username' value="<?php echo $username; ?>" onkeyup="checkUsername(this.value)"/><span id='umsg'></span></p>
+					<p><input class="form-control " type='text' name='username' required value="<?php echo $username; ?>" onkeyup="checkUsername(this.value)"/><span id='umsg'></span></p>
 					<label class="h5 mt-0">Full Name:</label>
-					<p><input class="form-control " type='text' name='name' value="<?php echo $name; ?>" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
+					<p><input class="form-control " type='text' name='name' required value="<?php echo $name; ?>" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
 					<label class="h5 mt-0">Email:</label>
-					<p><input class="form-control " type='email' name='email' value="<?php echo $email; ?>" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
+					<p><input class="form-control " type='email' name='email' required value="<?php echo $email; ?>" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
 					<input type='hidden' name='JSEnabled' value='FALSE' />
 					<?php
 					if (isset($error) && $error=='missing'){
@@ -169,11 +176,11 @@ extract($_REQUEST);
 				<form onSubmit="return checkUserInputs();" method="POST" action="updateuser.php" class="form-group w-25 mx-auto text-center">
 					<h1 class="font-weight-bold mb-5">Change Password</h1>
 					<!-- <label class="h5 mt-0">Old Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='oldpassword' placeholder="Current Password"/></p>
+					<p><input class="form-control form-control-lg" type='password' name='oldpassword' placeholder="Current Password" required/></p>
 					<!-- <label class="h5 mt-0">New Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='password' placeholder="New Password" onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
+					<p><input class="form-control form-control-lg" type='password' name='password' placeholder="New Password" required onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
 					<!-- <label class="h5 mt-0">Confirm Password:</label> -->
-					<p><input class="form-control form-control-lg" type='password' name='cpassword' placeholder="Confirm Password"/></p>
+					<p><input class="form-control form-control-lg" type='password' name='cpassword' placeholder="Confirm Password" required/></p>
 					<input type='hidden' name='JSEnabled' value='FALSE' />
 					<?php 
 					if (isset($error) && $error=='missing'){
@@ -194,31 +201,35 @@ extract($_REQUEST);
 				<?php
 				} // end of if passwordchange
 				else {
-					echo "<table border='1' align='center' width='300'>";
-					echo "<tr>";
-					echo "<th>Name</th>";
-					echo "<th>Username</th>";
-					echo "<th>Email</th>";
-					echo "<th colspan='2'>Update</th>";
-					echo "</tr>";
-					$username = $_SESSION['username'];
-					$sql = $db->prepare("SELECT * FROM users WHERE username=?;");
-					
-					if ($sql->execute(array($username))){
-						while ($info = $sql->fetch()) {   
-							echo "<tr>";
-							echo "<td>".$info['name']."</td>";
-							echo "<td>".$info['username']."</td>";
-							echo "<td>".$info['email']."</td>";
-							echo "<td><form method='POST'><input type='submit' name='infoupdate' value='Change Information'/></form></td>";
-							echo "<td><form method='POST'><input type='submit' name='passwordchange' value='Change Password'/></form></td>";
-							echo "</tr>";
+					try{
+						require('connection.php');
+						echo "<table border='1' align='center' width='300'>";
+						echo "<tr>";
+						echo "<th>Name</th>";
+						echo "<th>Username</th>";
+						echo "<th>Email</th>";
+						echo "<th colspan='2'>Update</th>";
+						echo "</tr>";
+						$username = $_SESSION['username'];
+						$sql = $db->prepare("SELECT * FROM users WHERE username=?");
+						if ($sql->execute(array($_SESSION['username']))){
+							while ($info = $sql->fetch(PDO::FETCH_ASSOC)) {   
+								echo "<tr>";
+								echo "<td>".$info['name']."</td>";
+								echo "<td>".$info['username']."</td>";
+								echo "<td>".$info['email']."</td>";
+								echo "<td><form method='POST'><input type='submit' name='infoupdate' value='Change Information'/></form></td>";
+								echo "<td><form method='POST'><input type='submit' name='passwordchange' value='Change Password'/></form></td>";
+								echo "</tr>";
+							}
 						}
+						echo "</table>";
 					}
-					echo "</table>";
+					catch(PDOExecption $e){
+						die ("ERROR:".$e->getMessage());
+					}
 				}
 				?>
-
 			</div>
 			<div class="col-6">
 

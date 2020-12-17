@@ -10,12 +10,17 @@
 <br>
 
 # Agenda
-1. Pictures Upload
-1. Auction Search function
-1. Sara Checking
+1. notAuthoraized.php
+1. navbar
+1. myAuctions + marking
+1. republish after failed
+1. Designing viewAuction.php, profile.php, bid.php, uploadPictures.php
+1. Checking username and password already exist in signup.php
+1. 
 
 <br>
 
 # Eventually
-1. myAuctions.php
-1. rename myAuctions.php
+1. profile.php
+1. web hosting done by Thursday... max Friday
+1. instructions.md done by Friday... max Saturday
