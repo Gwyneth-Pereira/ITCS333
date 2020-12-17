@@ -12,8 +12,8 @@ extract($_REQUEST);
 	<script>
 	var nameFlag=detailsFlag=false;
 
-	function checkName(name){
-		var nameExp=/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/;
+	function checkProduct(name){
+		var nameExp=/^[a-zA-Z0-9\s]{3,50}$/;
 		if (name.length==0){
 		m="";
 		nameFlag=false;
@@ -60,9 +60,9 @@ extract($_REQUEST);
 </head>	
 </html>
 
-<?php	
+<?php
 if (isset($submit)){
-	$productpattern="/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/";
+	$productpattern="/^[a-zA-Z0-9\s]{3,50}$/";
 	$detailspattern="/^(.|\s)*[a-zA-Z]{3,200}(.|\s)*$/";
 	if ($JSEnabled=="FALSE"){
 		if (trim($name)=='' || trim($details)=='' || trim($price)==''){
@@ -133,7 +133,8 @@ if (isset($submit)){
         
 		<p class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
         <p>
-        	<select class="form-control" type='text' name='category' placeholder="Category">
+        	<select class="form-control" type='text' name='category' placeholder="Category" required>
+				<option value="null">Please Select</option>
 				<option>Art</option>
 				<option>Books</option>
 				<option>Clothings</option>
@@ -146,7 +147,7 @@ if (isset($submit)){
         	</select>
         </p>
         <p class="h5 text-left font-weight-bold mt-4">Product Details:</p>
-        <p><textarea class="form-control" rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></p>
+        <p><textarea class="form-control" required rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></p>
         
 		<p class="h5 text-left font-weight-bold mt-4">Start Price:</p>
         <div class="input-group mb-3">
@@ -160,8 +161,8 @@ if (isset($submit)){
         <p><input class="form-control" type="datetime-local" id="end" name="end" step="1" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
 		max="<?php echo (date('Y')+1).date('-m-d').'T'.date('H:i:s'); ?>" required></p>
 
-        <input type='hidden' name='JSEnabled' value='FALSE' />
-		<h3 class='text-danger mb-4 mt-4'><?php echo $msg;?></h3>
+        <input type='hidden' name='JSEnabled' value='FALSE'/>
+		<h3 class='text-danger my-4'><?php echo $msg;?></h3>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Create Auction"></p>
     </form>
 	
