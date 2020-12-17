@@ -16,6 +16,7 @@ try {
 	if ($auction = $sql->fetch()) {
 		$highestBid = $auction['bid'];
 		$highestBidder = $auction['bidder'];
+		$startPrice = $auction['startprice'];
 	}
 } catch (PDOException $ex) {
 	echo $ex->getMessage();
@@ -23,15 +24,12 @@ try {
 }
 
 if(isset($bid)){
-
 	if (trim($userbid)=='') {
 		echo "Please enter your bid";
 	}
 	else {
-		//$bidpattern   REGEX PATTERN GOES HERE 
-		
-		// if (preg_match($bidpattern,$userbid)) {
-		try{			
+		try{	
+			// Approach 2 with keeping track of all bids in bidders table
 			if($userbid > $highestBid){
 				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
 				$sql->bindParam(':bid', $userbid);
@@ -74,6 +72,7 @@ if(isset($bid)){
 		<?php if (isset($highestBid)) {
 			echo $highestBid;
 		} else {
+			$highestBid = $startPrice;
 			echo "No Bids Yet!";
 		}
 		?></label>

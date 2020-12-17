@@ -14,7 +14,7 @@ try {
     require('connection.php');
     $username = $_SESSION['username'];
 
-    $sql = $db->prepare("SELECT * FROM auctions WHERE owner=?");
+    $sql = $db->prepare("SELECT auctions.*, products.name FROM auctions, products WHERE auctions.owner=? AND products.id=auctions.product");
     $sql->execute(array($username));
     $myAuctions = $sql->fetchAll();
     $auctionsCount = $sql->rowCount();
@@ -43,55 +43,86 @@ function displayAuctions($myAuctions){
         foreach ($myAuctions as $auction) {
             ?>
             <li class="row list-group-item">
-                <div class="col-12">
-                    <p class="font-weight-bold">Product:</p>
-                    <?php echo $auction['product'];?>
-                </div>
-                <div class="col-12">
-                    <p class="font-weight-bold">Owner:</p>
-                    <?php echo $auction['owner'];?>
+                <div class="col-6">
+                    <p class="font-weight-bold">
+                        Product: <?php echo $auction['name'];?>
+                    </p>
                 </div>
                 <div class="col-6">
-                    Started On:<br>
+                    <p class="font-weight-bold">
+                        Owner: <?php echo $auction['owner'];?>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 font-weight-bold">
+                        Started On:<br>
+                    </p>
                     <?php echo $auction['start'];?>
                 </div>
                 <div class="col-6">
-                    Ends On:<br>
+                    <p class="mb-1 font-weight-bold">
+                        Ends On:<br>
+                    </p>
                     <?php echo $auction['end'];?>
                 </div>
                 <div class="col-6">
-                    Price Started at: <em><?php echo $auction['startprice'];?></em>
+                    <p class="mb-1 font-weight-bold">Price Started at: </p>
+                    <em><?php echo $auction['startprice'];?></em>
                 </div>
                 <div class="col-6">
-                    Current Highest Bid:<br>
-                    <?php echo $auction['bid'];?> by <?php echo $auction['bidder'];?>
+                    <p class="mb-1 font-weight-bold">Current Highest Bid: </p>
+                    <?php 
+                    if(isset($auction['bid'])){
+                        echo $auction['bid'];?> by <?php echo $auction['bidder'];
+                    } 
+                    else {
+                        echo "No Bids Yet!";
+                    }
+                    ?>
                 </div>
-                <div class="col-6">
-                    Auction Status:<br>
+                <div class="col-4">
+                    <p class="mb-1 font-weight-bold">Auction Status: </p>
                     <?php 
                         $status = $auction['status'];
-                        $auctionid = $auction['id'];
                         
                         if ($status == 'active') {
                             echo "<p class='text-success'><u>Active</u></p>";
                         } elseif ($status == 'pending') {
-                            echo "<p class='text-secondary'><u>Pending</u></p>";
-                            echo "<a href='myAuctions.php?update=failed' class='btn btn-sm btn-danger'>Mark as Failed</a>";
+                            echo "<p class='text-warning'><u>Pending</u></p>";
                         } elseif ($status == 'noparticipation') {
-                            echo "<a href='myAuctions.php?update=complete' class='btn btn-sm btn-success'>Mark as Complete</a>";
+                            echo "<p class='text-secondary'><u>No Participations</u></p>";
                         } elseif ($status == 'successful') {
-                            echo "<a href='myAuctions.php?update=complete' class='btn btn-sm btn-success'>Mark as Complete</a>";
+                            echo "<p class='text-success'><u>Successful</u></p>";
                         } elseif ($status == 'failed') {
-                            echo "<a href='myAuctions.php?update=complete' class='btn btn-sm btn-success'>Mark as Complete</a>";
+                            echo "<p class='text-danger'><u>Failed</u></p>";
                         } elseif ($status == 'completed') {
-                            echo "<a href='myAuctions.php?update=complete' class='btn btn-sm btn-success'>Mark as Complete</a>";
+                            echo "<p class='text-success'><u>Completed</u></p>";
                         }
                     ?>
                 </div>
-                <div class="col-6">
-                    <?php                         
-                        echo "<span class='text-right'><a href='viewAuction.php?auctionid=$auctionid'>View Auctions Details</a><span>";
+                <div class="col-8">
+                    <p class="mb-1 font-weight-bold">Actions:</p>
+                    <?php
+                        $auctionid = $auction['id'];
+
+                        if ($status == 'active') {
+                            echo "<a href='viewAuction.php?auctionid=$auctionid' class='btn btn-sm btn-primary'>View Auction</a>";
+                        } elseif ($status == 'pending') {
+                            echo "<a href='myAuctions.php?update=failed' class='btn btn-sm btn-danger mr-3'>Mark as Failed</a>";
+                            echo "<a href='viewAuction.php?auctionid=$auctionid' class='btn btn-sm btn-primary'>View Auction</a>";
+                        } elseif ($status == 'noparticipation') {
+                            echo "<a href='myAuctions.php?update=failed' class='btn btn-sm btn-danger mr-3'>Mark as Failed</a>";
+                            echo "<a href='republish.php?auctionid=$auctionid' class='btn btn-sm btn-primary'>Republish</a>";
+                        } elseif ($status == 'successful') {
+                            echo "<a href='myAuctions.php?update=complete' class='btn btn-sm btn-success mr-3'>Mark as Complete</a>";
+                            echo "<a href='viewAuction.php?auctionid=$auctionid' class='btn btn-sm btn-primary'>View Auction</a>";
+                        } elseif ($status == 'failed') {
+                            echo "<a href='republish.php?auctionid=$auctionid' class='btn btn-sm btn-primary'>Republish</a>";
+                        } elseif ($status == 'completed') {
+                            echo '<p class="mb-1 font-weight-bold text-dark">No Actions Available</p>';
+                        }                    
                     ?>
+                
                 </div>
             </li>
             <?php

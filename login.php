@@ -46,8 +46,8 @@ elseif(!isset($_SESSION['active'])) {
 		<!-- <p>Username:</p> -->
 		<!-- <p>Password:</p> -->
 		<div class="form-group text-center w-50 mx-auto">
-			<p><input class="form-control form-control-lg" type="text" name="username" placeholder="Username" required></p>
-			<p><input class="form-control form-control-lg" type="password" name="password" placeholder="Password" required></p>
+			<p><input class="form-control form-control-lg" type="text" name="username" placeholder="Username"></p>
+			<p><input class="form-control form-control-lg" type="password" name="password" placeholder="Password"></p>
 			<p><input class="btn btn-lg btn-outline-success" type="submit" name="login" value="Login"></p>
 		</div>
 	</form>

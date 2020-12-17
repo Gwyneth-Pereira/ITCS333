@@ -14,9 +14,8 @@
 1. navbar
 1. myAuctions + marking
 1. republish after failed
-1. Designing viewAuction.php, profile.php, bid.php, uploadPictures.php
-1. Checking username and password already exist in signup.php
-1. 
+1. regex everywhere 
+1. AJAX for validation + everywhere
 
 <br>
 
