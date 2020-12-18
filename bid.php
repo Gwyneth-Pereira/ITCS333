@@ -4,7 +4,6 @@ if (!isset($_SESSION['active'])) {
 	header('location: notAuthorized.php');
 	exit;
 }
-
 require('controlled.php');
 extract($_REQUEST);
 try {
@@ -28,14 +27,16 @@ if(isset($bid)){
 		echo "Please enter your bid";
 	}
 	else {
-		try{	
-			// Approach 2 with keeping track of all bids in bidders table
+		try{
+			$bidder = $_SESSION['username'];
+
 			if($userbid > $highestBid){
-				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
-				$sql->bindParam(':bid', $userbid);
-				$sql->bindParam(':bidder', $bidder);
-				$sql->bindParam(':auction', $auctionid);
-				$sql->execute();
+				// $sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
+				// $sql->bindParam(':bid', $userbid);
+				// $sql->bindParam(':bidder', $bidder);
+				// $sql->bindParam(':auction', $auctionid);
+				$sql=$db->prepare("UPDATE auctions SET bid=?, bidder=? WHERE id=?");
+				$sql->execute(array($userbid, $bidder, $auctionid));
 				if ($sql->rowCount() == 1) {
 					header('location: myAuctions.php?message=bid');
 					exit;
@@ -73,15 +74,15 @@ if(isset($bid)){
 			echo $highestBid;
 		} else {
 			$highestBid = $startPrice;
-			echo "No Bids Yet!";
+			echo "starting at $highestBid BD";
 		}
 		?></label>
 		<div><?php if(isset($error)){ echo "<p class='text-danger'>$error</p>"; } ?></div>
 		<label for="bid">Your Bid: </label>
 		<!-- pid = product id  -->
 		<!-- Approach 2... passing the auction details from the auction selected to here -->
-		<input type='hidden' name='bidder' value='<?php echo $_SESSION['username']; ?>'>
-		<input type='hidden' name='auctionid' value='<?php echo $auctionid; ?>'>
+		<!-- <input type='hidden' name='bidder' value='<?php //echo $_SESSION['username']; ?>'> -->
+		<!-- <input type='hidden' name='auctionid' value='<?php //echo $auctionid; ?>'> -->
 
 		<input type="number" name="userbid" min="<?php echo $highestBid; ?>" step="any" required><!-- step=any for decimals  -->
 		<input type="submit" name="bid" value="Bid">

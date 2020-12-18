@@ -21,5 +21,8 @@
 
 # Eventually
 1. profile.php
+1. system name
+1. logo and pictures
+1. website information filling
 1. web hosting done by Thursday... max Friday
 1. instructions.md done by Friday... max Saturday

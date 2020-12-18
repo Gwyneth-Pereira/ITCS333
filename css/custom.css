@@ -134,30 +134,77 @@ nav{
 /* 
 Search Bar
 */
-
-.navbar-form
-{
-    position: relative;
-}
-.form-control
-{
-    width: 100%;
-}
-#searchResult
-{
-    position: absolute;
-    width: auto; 
-    z-index:2;
-    background: white;
-    max-height: 200px;
-    overflow-y: auto;
-    /*relative to navbar: */
-    left: 0;
-    right: 0;
-    top: 20px;
-    margin-top: 1.2em;
+.navbar-form {
+  position: relative;
 }
 
+.form-control {
+  width: 100%;
+}
+
+#searchResult {
+  position: absolute;
+  width: auto; 
+  z-index:2;
+  background: white;
+  max-height: 200px;
+  overflow-y: auto;
+  /*relative to navbar: */
+  left: 0;
+  right: 0;
+  top: 20px;
+  margin-top: 1.2em;
+}
+
+/* Private Chat Page */
+#wrapper {
+  margin:0 auto;
+  padding-bottom:25px;
+  background:#EBF4FB;
+  width:504px;
+  border:1px solid #ACD8F0; 
+}
+
+#chatbox {
+  text-align:left;
+  margin:0 auto;
+  margin-bottom:25px;
+  padding:10px;
+  background:#fff;
+  height:470px;
+  width:430px;
+  border:1px solid #ACD8F0;
+  overflow:auto;
+}
+ 
+#usermsg {
+  width:395px;
+  border:1px solid #ACD8F0; 
+}
+  
+#submit {
+  width: 60px; 
+}
+  
+.error { 
+  color: #ff0000;
+}
+  
+#menu {
+  padding:12.5px 25px 12.5px 25px;
+}
+  
+.welcome {
+  float:left;
+}
+  
+.logout {
+  float:right;
+}
+  
+.msgln {
+  margin:0 0 2px 0;
+}
 
 /*#home-exercises{
 	background-image: url();
