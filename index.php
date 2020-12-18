@@ -1,10 +1,9 @@
 <?php
-session_start();
 if (!isset($_SESSION['active'])) {
 	# code...
+	session_start();
 }
 require('connection.php');
-require('controlled.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,6 +18,8 @@ require('controlled.php');
 	<div class="container">
 		<h1>This is the home page</h1>
 	</div>
+
+
 	<?php include 'scripts.php'; ?>
 </body>
 </html>

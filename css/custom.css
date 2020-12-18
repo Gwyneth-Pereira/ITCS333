@@ -1,22 +1,24 @@
 /* ROOT PARENT */
-* {
-  -webkit-box-sizing: border-box; 
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;         
-} 
 body{
 	font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     /*padding-top: 3em; /*for fixed-top navbar*/
 }
+
 h1{
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
+
 a, a:hover{
 	text-decoration: none;
 	text-decoration-style: none;
 }
+
+#exercises a, #exercises a:hover{
+	color: #c5343a;
+}
+
 /* TABLE */
 table{
 	max-width: 65vw;
@@ -35,9 +37,6 @@ label{
 	text-align: center;
 	font-size: 1.6em;
 	font-weight: bold; 
-}
-#exercises a, #exercises a:hover{
-  color: #c5343a;
 }
 
 /* NAVBAR */
@@ -130,34 +129,6 @@ nav{
 	min-height: 60vh;
 	align-content: center;
 }
-
-/* 
-Search Bar
-*/
-
-.navbar-form
-{
-    position: relative;
-}
-.form-control
-{
-    width: 100%;
-}
-#searchResult
-{
-    position: absolute;
-    width: auto; 
-    z-index:2;
-    background: white;
-    max-height: 200px;
-    overflow-y: auto;
-    /*relative to navbar: */
-    left: 0;
-    right: 0;
-    top: 20px;
-    margin-top: 1.2em;
-}
-
 
 /*#home-exercises{
 	background-image: url();
