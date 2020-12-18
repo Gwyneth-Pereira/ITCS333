@@ -31,7 +31,7 @@ try{
 	$productid = $auctions['product'];
 
 	$sql = $db->prepare("SELECT * FROM products WHERE id=?");
-	$sql->execute(array($pid));
+	$sql->execute(array($productid));
 	$products = $sql->fetch(PDO::FETCH_ASSOC);
 	
 	// Retrieving highest bid and bidder
