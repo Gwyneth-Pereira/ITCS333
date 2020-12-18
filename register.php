@@ -31,6 +31,12 @@ session_start();
     elseif(isset($_GET['error'])&& $_GET['error']=='mismatch'){
         $msg="Passwords do not match";
     }
+    elseif(isset($_GET['error'])&& $_GET['error']=='userexist'){
+        $msg="Username already exists";
+    }
+    elseif(isset($_GET['error'])&& $_GET['error']=='emailexist'){
+        $msg="Email already exists";
+    }
     ?>
 
     <form method="POST" action="signup.php" class="form-group w-25 mx-auto text-center" onSubmit="return checkUserInputs();">
