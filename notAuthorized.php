@@ -5,17 +5,36 @@ session_start();
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	
+	<title>Unauthorized</title>
 	<?php include 'head.php'; ?>
 </head>
 <body>
 	<?php include 'header.php'; ?>
+	
 	<div>
 		<h1>You are not authorized to be here</h1>
 		<h1><a href="login.php">Please Login First From Here</a></h1>
 	</div>
 	
+	<div class="container py-5 mt-5">
+		<div class="row">
+			<div class="col-4 text-right">
+				<img src="images/unicorn.png" style="width: 60%;">
+			</div>
+			<div class="col-8 text-center mt-md-5">
+				<h2 class="h2 text-dark text-uppercase font-weight-bold">Unicorns don't exist...</h2>
+				<h2 class="h1 text-danger text-uppercase font-weight-bold">neither does this page.</h2>
+				<p class="h5 font-weight-bold">(404 ERROR)</p>
+				<br><br>
+				<div class="text-center px-3 px-md-5 mx-3 mx-md-5">
+					<p class="h5">We're not sure what happened to the unicorns, but we have some guesses as to what happened to this page.</p>
+					<p class="h6 mt-4 text-warning font-weight-bold">This page is under construction...<br>We have big plans for this page, so come back often.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<?php include 'scripts.php'; ?>
 </body>
 </html>
