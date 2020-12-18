@@ -4,6 +4,7 @@ if (!isset($_SESSION['active'])) {
 	header('location: notAuthorized.php');
 	exit;
 }
+
 require('controlled.php');
 extract($_REQUEST);
 try {
@@ -15,7 +16,6 @@ try {
 	if ($auction = $sql->fetch()) {
 		$highestBid = $auction['bid'];
 		$highestBidder = $auction['bidder'];
-		$startPrice = $auction['startprice'];
 	}
 } catch (PDOException $ex) {
 	echo $ex->getMessage();
@@ -23,20 +23,21 @@ try {
 }
 
 if(isset($bid)){
+
 	if (trim($userbid)=='') {
 		echo "Please enter your bid";
 	}
 	else {
-		try{
-			$bidder = $_SESSION['username'];
-
+		//$bidpattern   REGEX PATTERN GOES HERE 
+		
+		// if (preg_match($bidpattern,$userbid)) {
+		try{			
 			if($userbid > $highestBid){
-				// $sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
-				// $sql->bindParam(':bid', $userbid);
-				// $sql->bindParam(':bidder', $bidder);
-				// $sql->bindParam(':auction', $auctionid);
-				$sql=$db->prepare("UPDATE auctions SET bid=?, bidder=? WHERE id=?");
-				$sql->execute(array($userbid, $bidder, $auctionid));
+				$sql=$db->prepare("UPDATE auctions SET bid=:bid AND bidder=:bidder WHERE id=:auction");
+				$sql->bindParam(':bid', $userbid);
+				$sql->bindParam(':bidder', $bidder);
+				$sql->bindParam(':auction', $auctionid);
+				$sql->execute();
 				if ($sql->rowCount() == 1) {
 					header('location: myAuctions.php?message=bid');
 					exit;
@@ -73,16 +74,15 @@ if(isset($bid)){
 		<?php if (isset($highestBid)) {
 			echo $highestBid;
 		} else {
-			$highestBid = $startPrice;
-			echo "starting at $highestBid BD";
+			echo "No Bids Yet!";
 		}
 		?></label>
 		<div><?php if(isset($error)){ echo "<p class='text-danger'>$error</p>"; } ?></div>
 		<label for="bid">Your Bid: </label>
 		<!-- pid = product id  -->
 		<!-- Approach 2... passing the auction details from the auction selected to here -->
-		<!-- <input type='hidden' name='bidder' value='<?php //echo $_SESSION['username']; ?>'> -->
-		<!-- <input type='hidden' name='auctionid' value='<?php //echo $auctionid; ?>'> -->
+		<input type='hidden' name='bidder' value='<?php echo $_SESSION['username']; ?>'>
+		<input type='hidden' name='auctionid' value='<?php echo $auctionid; ?>'>
 
 		<input type="number" name="userbid" min="<?php echo $highestBid; ?>" step="any" required><!-- step=any for decimals  -->
 		<input type="submit" name="bid" value="Bid">

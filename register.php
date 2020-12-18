@@ -1,6 +1,5 @@
 <?php
-// session_start();
-require 'connection.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,10 +7,10 @@ require 'connection.php';
     <meta charset="utf-8">
     <title>Register Page</title>
     <?php include 'head.php'; ?>
+
 </head>
 <body>
     <?php include 'header.php'; ?>
-
     <?php
     $msg="";
     if(isset($_GET['error'])&& $_GET['error']=='missing'){
@@ -40,21 +39,24 @@ require 'connection.php';
     }
     ?>
 
-    <form method="POST" action="signup.php" class="form-group w-25 mx-auto text-center" data-aos="fade-down" data-aos-delay="100">
+    <form method="POST" action="signup.php" class="form-group w-25 mx-auto text-center" onSubmit="return checkUserInputs();">
         <h1 class="font-weight-bold mb-4">Sign Up</h1>
         <!-- <p>Name:</p> -->
-        <p><input class="form-control" type='text' name='name' placeholder="Full Name"/></p>
+        <p><input class="form-control" required type='text' name='name' placeholder="Full Name" onkeyup="checkName(this.value)"/><span id='nmsg'></span></p>
         <!-- <p>Email:</p> -->
-        <p><input class="form-control" type='email' name='email' placeholder="Email"/></p>
+        <p><input class="form-control" required type='email' name='email' placeholder="Email" onkeyup="checkEmail(this.value)"/><span id='emsg'></span></p>
         <!-- <p>Username:</p> -->
-        <p><input class="form-control" type='text' name='username' placeholder="Username"/></p>
+        <p><input class="form-control" required type='text' name='username' placeholder="Username" onkeyup="checkUsername(this.value)"/><span id='umsg'></span></p>
         <!-- <p>Password:</p> -->
-        <p><input class="form-control" minlength="8" type='password' name='password' placeholder="Password"/></p>
+        <p><input class="form-control" required minlength="8" type='password' name='password' placeholder="Password" onkeyup="checkPassword(this.value)"/><span id='pmsg'></span></p>
         <!-- <p>Confirm Password:</p> -->
-        <p><input class="form-control" minlength="8" type='password' name='cpassword' placeholder="Confirm Password"/></p>
+        <p><input class="form-control" required minlength="8" type='password' name='cpassword' placeholder="Confirm Password"/></p>
+        <input type='hidden' name='JSEnabled' value='FALSE' />
+        <h3 class='text-danger mb-4 mt-4'><?php echo $msg;?></h3>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Sign Up"></p>
     </form>
 
     <?php include 'scripts.php'; ?>
+    <script type="text/javascript" src="js/jsvalidation.js"></script>
 </body>
 </html>

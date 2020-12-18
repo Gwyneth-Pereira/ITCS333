@@ -78,9 +78,7 @@ try{
 	// $hours=gmdate("G", $auctions['end'] - time());
 	// $minutes=gmdate("i", $auctions['end'] - time());
 	// echo $hours." hours and ".$minutes." minutes left";
-	if ($auctions['owner']!=$_SESSION['username']) {
-		echo "<p><a href='bid.php?auctionid=$auctionid'>Bid on Auction</a></p>"; // THIS WILL CHANGE WITH JS
-	}
+	echo "<p><a href='bid.php?auctionid=$auctionid'>Bid on Auction</a></p>"; // THIS WILL CHANGE WITH JS
 
 	$db=null;
 } catch(PDOExecption $e){

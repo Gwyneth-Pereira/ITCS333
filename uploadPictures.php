@@ -64,15 +64,16 @@ if (!isset($_SESSION['active'])) {
 	<?php include 'header.php'; ?>
 
 	<div class="container">
-		<h1 class="mx-auto text-center mb-5">Upload Product Pictures</h1>
-		<form method="POST" class="form-group w-50 mx-auto text-center" enctype="multipart/form-data">
-			<p class="text-left h5">Picture:</p>
-			<p><input type="file" name="picture[]" id="picture" class="form-control" accept="image/*" multiple required></p>
-			<input type="submit" name="upload" class="form-control btn btn-lg btn-outline-dark w-50 mr-4 py-0" value="Upload Picture"/>
-			<a href="myAuctions.php?message=created" class="btn btn-lg text-primary">Skip For Now</a>
-		</form>
+		<h1>Would you like pictures</h1>
 	</div>
+
+	<form method="POST" class="form-group w-25 mx-auto text-center" enctype="multipart/form-data">
+		<h2>You can upload pictures with from here</h2>
+		<p>Picture: <input type="file" name="picture[]" id="picture" accept="image/*" multiple required></p>
+		<p><input type="submit" name="upload" value="Upload Picture"/></p>
+	</form>
 	
+	<a href="myAuctions.php?message=created">Skip For Now</a>
 	
 	<?php include 'scripts.php'; ?>
 </body>
