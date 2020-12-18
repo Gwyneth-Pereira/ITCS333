@@ -47,8 +47,8 @@ if (isset($submit)) {
 		<h1 class="font-weight-bold mb-4">Create Auction</h1>
         
 		<p class="h5 text-left font-weight-bold mt-4">Product name:</p>
-        <p><input class="form-control" type="text" name="name" placeholder="Product Name" required/></p>
-        
+        <p><input class="form-control" type="text" name="name" placeholder="Product Name" required onkeyup="checkProduct(this.value)"/><span id='pmsg'></span></p>
+  
 		<p class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
         <p>
         	<select class="form-control" type='text' name='category' placeholder="Category">
@@ -64,7 +64,7 @@ if (isset($submit)) {
         	</select>
         </p>
         <p class="h5 text-left font-weight-bold mt-4">Product Details:</p>
-        <p><textarea class="form-control" rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details"></textarea></p>
+        <p><textarea class="form-control" required rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></span></p>
         
 		<p class="h5 text-left font-weight-bold mt-4">Start Price:</p>
         <div class="input-group mb-3">
