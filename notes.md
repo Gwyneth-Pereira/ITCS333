@@ -14,13 +14,15 @@
 1. navbar
 1. myAuctions + marking
 1. republish after failed
-1. Designing viewAuction.php, profile.php, bid.php, uploadPictures.php
-1. Checking username and password already exist in signup.php
-1. 
+1. regex everywhere 
+1. AJAX for validation + everywhere
 
 <br>
 
 # Eventually
 1. profile.php
+1. system name
+1. logo and pictures
+1. website information filling
 1. web hosting done by Thursday... max Friday
 1. instructions.md done by Friday... max Saturday

@@ -6,7 +6,6 @@ require('controlled.php');
 // 	header('location: notAuthorized.php');
 // 	exit;
 // }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +21,7 @@ require('controlled.php');
 		<h1>This is the browse page</h1>
 	</div>
     <div class="container">
-        <div class="row">
+        <div class="row pb-5">
             <?php 
             try {
                 require('connection.php');
@@ -39,14 +38,21 @@ require('controlled.php');
                     $sql = $db->prepare("SELECT picture FROM pictures WHERE product=?");
                     $sql->execute(array($productid));
                     $pictures = $sql->fetchAll();
-
+                    
+                    $owner = $auction['owner'];
+                    if (isset($auction['bid'])) {
+                        $bid = $auction['bid'];
+                    } else {
+                        $bid = $auction['startprice'];
+                    }
+                    
                     // display name and a few lines of details of product
                     while ($product=$products->fetch()){   
                         $name = $product['name'];
                         $details = $product['details'];
                         // echo "<p>Auction #</p>";
-                        echo '<div class="col-12 col-lg-3 mx-4">';
-                        echo "<div class='card' style='width: 19em;'>";
+                        echo '<div class="col-12 col-lg-3 m-4">';
+                        echo "<div class='card' style='width: 19em; height: 32em;'>";
                         if (!$pictures) {
                             echo "<img src='images/products/default-image.png' class='card-img-top' style='height: 300px;'>"; 
                         } else {
@@ -77,9 +83,10 @@ require('controlled.php');
                             echo '</a>';
                         }
                         
-                        echo "<div class='card-body'>";
-                        echo "<h5 class='card-title'>$name</h5>";
-                        echo "<p class='card-text'>$details</p>";
+                        echo "<div class='card-body' style='height: 280px;'>";
+                        echo "<h5 class='card-title'>Product: $name</h5>";
+                        echo "<p class='card-text' style='height: 45px;'>Details: $details</p>";
+                        echo "<p class='card-text'>Owner: $owner <span class='ml-4'>Bid: $bid</span></p>";
                         // view picture, owner, start price, highest bid, all details, start/end date+time, AND BID BUTTON
                         echo "<a href='viewAuction.php?auctionid=$auctionid' class='btn btn-primary'>View Details</a>"; 
                         echo "</div>";

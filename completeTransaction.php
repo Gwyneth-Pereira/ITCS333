@@ -101,6 +101,7 @@ extract($_REQUEST);
 </head>
 <body>
     <?php include 'header.php'; ?>
+
     <?php
     if(isset($submit)){
         $namepattern="/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/";
