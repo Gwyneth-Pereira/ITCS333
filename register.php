@@ -97,5 +97,6 @@ session_start();
 
     <?php include 'scripts.php'; ?>
     <script type="text/javascript" src="js/jsvalidation.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 </body>
 </html>
