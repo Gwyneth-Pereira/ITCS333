@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <title>Register Page</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 
 </head>
 <body>
