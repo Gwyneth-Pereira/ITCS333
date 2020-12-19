@@ -1,16 +1,21 @@
 <?php 
-require('connection.php');
+session_start();
 extract($_REQUEST);
+if (!isset($_SESSION['active'])) {
+	header('location: notAuthorized.php');
+	exit;
+}
 
 if(isset($upload)) {
 	// if (!isset($picture)) {
-	// 	echo "Please provide a picture to upload!";
-	// 	exit();
-	// }
-	
-	
-	try {
+		// 	echo "Please provide a picture to upload!";
+		// 	exit();
+		// }
 		
+		
+	try {
+		require('connection.php');
+			
 		// Counting number of pictures
 		$quantity = count($_FILES['picture']['name']);
 		
@@ -47,11 +52,7 @@ if(isset($upload)) {
 }
 ?>
 <?php
-session_start();
-if (!isset($_SESSION['active'])) {
-	header('location: notAuthorized.php');
-}
-// require('connection.php');
+
 ?>
 <!DOCTYPE html>
 <html>

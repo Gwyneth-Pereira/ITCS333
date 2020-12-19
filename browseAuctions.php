@@ -75,9 +75,9 @@ require('controlled.php');
                         }
                         
                         echo "<div class='card-body' style='height: 280px;'>";
-                        echo "<h5 class='card-title'>Product: $name</h5>";
-                        echo "<p class='card-text' style='height: 45px;'>Details: $details</p>";
-                        echo "<p class='card-text'>Owner: $owner <span class='ml-4'>Bid: $bid</span></p>";
+                        echo "<h5 class='card-title font-weight-bold'>$name</h5>";
+                        echo "<p class='card-text text-truncate' style='height: 45px;'>Details:<br>$details</p>";
+                        echo "<p class='card-text'><span class='font-weight-bold'>Owner:</span> <a href='viewUser.php?user=$owner'>$owner</a><span class='ml-4'>Bid: $bid</span></p>";
                         // view picture, owner, start price, highest bid, all details, start/end date+time, AND BID BUTTON
                         echo "<a href='viewAuction.php?auctionid=$auctionid' class='btn btn-primary'>View Details</a>"; 
                         echo "</div>";

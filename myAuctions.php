@@ -100,7 +100,9 @@ function displayAuctions($myAuctions){
                     <p class="mb-1 font-weight-bold">Current Highest Bid: </p>
                     <?php 
                     if(isset($auction['bid'])){
-                        echo $auction['bid'];?> by <?php echo $auction['bidder'];
+                        $bid = $auction['bid'];
+                        $bidder = $auction['bidder'];
+                        echo "$bid by <a href='viewUser.php?user=$bidder'>$bidder</a>";
                     } 
                     else {
                         echo "No Bids Yet!";
@@ -147,20 +149,45 @@ function displayAuctions($myAuctions){
                             echo "<a href='republish.php?auctionid=$auctionid' class='btn btn-sm btn-outline-primary'>Republish</a>";
                         } elseif ($status == 'completed') {
                             echo "<a href='chat.php?auctionid=$auctionid' class='btn btn-sm btn-outline-secondary m-1'>Chat</a>";
-                            ?>
-                            <div class="rate m-1">
-                                <input type="radio" id="star5" name="rate" class="star" value="5" onclick="submit()"/>
-                                <label for="star5" title="text">5 stars</label>
-                                <input type="radio" id="star4" name="rate" class="star" value="4" onclick="submit()"/>
-                                <label for="star4" title="text">4 stars</label>
-                                <input type="radio" id="star3" name="rate" class="star" value="3" onclick="submit()"/>
-                                <label for="star3" title="text">3 stars</label>
-                                <input type="radio" id="star2" name="rate" class="star" value="2" onclick="submit()"/>
-                                <label for="star2" title="text">2 stars</label>
-                                <input type="radio" id="star1" name="rate" class="star" value="1" onclick="submit()"/>
-                                <label for="star1" title="text">1 star</label>
-                            </div>
-                        <?php
+                            
+                            require('connection.php');
+                            $sql = $db->prepare("SELECT * FROM ratings WHERE auctionid=?");
+                            $sql->execute(array($auctionid));
+                            $ratings = $sql->fetchAll();
+                            $ratingsCount = $sql->rowCount();
+                            
+                            if ($ratingsCount == 0) {
+                                $attribute = "onclick='this.submit()'";
+                            } else {
+                                if (isset($ratings['sellerRating'])) {
+                                    $stars = $ratings['sellerRating'];
+                                    $attribute = "onclick='this.submit()'";
+                                } else {
+                                    # code...
+                                }
+                            }
+                            
+                            echo '<form method="POST" action="rating.php">';
+                                echo "<input type='hidden' name='auctionid' value='$auctionid'/>";
+                                echo "<input type='hidden' name='rater' value='seller'/>";
+                                echo '<div class="rate m-1">';
+                                    for ($i=5; $i > 0; $i--) { 
+                                        echo "<input type='radio' id='$auctionid-star$i' name='rate' class='star' value='$i' $attribute/>";
+                                        echo "<label for='$auctionid-star$i' title='text'>$i stars</label>";
+                                    }
+                                    // echo '<input type="radio" id="star5" name="rate" class="star" value="5" onclick="submit()"/>';
+                                    // echo '<label for="star5" title="text">5 stars</label>';
+                                    // echo '<input type="radio" id="star4" name="rate" class="star" value="4" onclick="submit()"/>';
+                                // echo '<input type="radio" id="star3" name="rate" class="star" value="3" onclick="submit()"/>';
+                                // echo '<label for="star4" title="text">4 stars</label>';
+                                    // echo '<label for="star3" title="text">3 stars</label>';
+                                    // echo '<input type="radio" id="star2" name="rate" class="star" value="2" onclick="submit()"/>';
+                                    // echo '<label for="star2" title="text">2 stars</label>';
+                                    // echo '<input type="radio" id="star1" name="rate" class="star" value="1" onclick="submit()"/>';
+                                    // echo '<label for="star1" title="text">1 star</label>';
+                                echo '</div>';
+                            echo '</form>';
+                        
                         }                    
                     ?>
                 
@@ -199,7 +226,10 @@ function displayBiddings($myBids){
                 </div>
                 <div class="col-6">
                     <p class="font-weight-bold">
-                        Owner: <?php echo $bidding['owner'];?>
+                    <?php 
+                        $owner = $bidding['owner'];
+                        echo "Owner: <a href='viewUser.php?user=$owner'>$owner</a>";
+                    ?>
                     </p>
                 </div>
                 <div class="col-6">
@@ -231,9 +261,7 @@ function displayBiddings($myBids){
                 </div>
                 <div class="col-6">
                     <p class="mb-1 font-weight-bold">Auction Status: </p>
-                    <?php 
-                        echo "<p class='text-success'><u>Active</u></p>";
-                        ?>
+                    <p class="text-success"><u>Active</u></p>
                 </div>
                 <div class="col-6">
                     <p class="mb-1 font-weight-bold">Actions:</p>
@@ -279,7 +307,10 @@ function displayPending($myPending){
             </div>
             <div class="col-6">
                 <p class="font-weight-bold">
-                    Owner: <?php echo $bidding['owner'];?>
+                <?php 
+                    $owner = $bidding['owner'];
+                    echo "Owner: <a href='viewUser.php?user=$owner'>$owner</a>";
+                ?>
                 </p>
             </div>
             <div class="col-6">
@@ -349,7 +380,10 @@ function displayHistory($history){
                 </div>
                 <div class="col-6">
                     <p class="font-weight-bold">
-                        Owner: <?php echo $bidding['owner'];?>
+                    <?php 
+                        $owner = $bidding['owner'];
+                        echo "Owner: <a href='viewUser.php?user=$owner'>$owner</a>";
+                    ?>
                     </p>
                 </div>
                 <div class="col-6">
@@ -390,19 +424,34 @@ function displayHistory($history){
                     <?php
                         $auctionid = $bidding['id'];
                         echo "<a href='chat.php?auctionid=$auctionid' class='btn btn-sm btn-outline-secondary m-1'>Chat</a>";
-                    ?>
-                    <div class="rate m-1">
-                        <input type="radio" id="star5" class="star" name="rate" value="5" onclick="submit()"/>
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" class="star" name="rate" value="4" onclick="submit()"/>
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" class="star" name="rate" value="3" onclick="submit()"/>
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" class="star" name="rate" value="2" onclick="submit()"/>
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" class="star" name="rate" value="1" onclick="submit()"/>
-                        <label for="star1" title="text">1 star</label>
-                    </div>
+                        require('connection.php');
+                        $sql = $db->prepare("SELECT * FROM ratings WHERE auctionid=?");
+                        $sql->execute(array($auctionid));
+                        $ratings = $sql->fetchAll();
+                        $ratingsCount = $sql->rowCount();
+                        
+                        if ($ratingsCount == 0) {
+                            $attribute = "onclick='submit()'";
+                        } else {
+                            if (isset($ratings['sellerRating'])) {
+                                $stars = $ratings['sellerRating'];
+                                $attribute = "onclick='submit()'";
+                            } else {
+                                # code...
+                            }
+                        }
+                        
+                        echo '<form method="POST" action="rating.php">';
+                            echo "<input type='hidden' name='auctionid' value='$auctionid'/>";
+                            echo "<input type='hidden' name='rater' value='seller'/>";
+                            echo '<div class="rate m-1">';                                
+                                for ($i=5; $i > 0; $i--) { 
+                                    echo "<input type='radio' id='$auctionid-star$i' name='rate' class='star' value='$i' $attribute/>";
+                                    echo "<label for='$auctionid-star$i' title='text'>$i stars</label>";
+                                }
+                            echo '</div>';
+                        echo '</form>';
+                    ?>                    
                 </div>
             </li>
             <?php
