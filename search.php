@@ -3,9 +3,9 @@ extract($_REQUEST);
 
 
 if(isset($searchfield)){
-trim($searchfield);
+$searchfield=trim($searchfield);
 
-$regexsearchpattern="/[a-z0-9]/i";
+$regexsearchpattern="/^(.|\s)*[a-zA-Z]{1,100}(.|\s)*$/";
 if (preg_match($regexsearchpattern, $searchfield)) {
 	try{
 		$searchTerms=explode(" ", $searchfield);
@@ -42,14 +42,13 @@ $auctions=null;
 			//echo "<li>Status:".$auctions[$i]['status']."</li>";
 			echo '</a>';
 		}
-		//echo "<a>view all search results</a>";
 
 
 	}//if product is found
 
 if ($prods==null) {
 	echo "No such product exists\n";
-	echo "<a href>Browse all Products</a>";
+	echo "<a href='browseAuctions.php'>Browse all Products</a>";
 }
 	}//try
 

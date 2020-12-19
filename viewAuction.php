@@ -24,22 +24,21 @@ extract($_REQUEST);
 try{
 	require('connection.php');
 
-	
+
 	$sql = $db->prepare("SELECT * FROM auctions WHERE id=?");
 	$sql->execute(array($auctionid));
 	$auctions = $sql->fetch(PDO::FETCH_ASSOC);
-
 	$productid = $auctions['product'];
 
-	$sql = $db->prepare("SELECT * FROM products WHERE id=?"); //might change with what attribute submitted
+	$sql = $db->prepare("SELECT * FROM products WHERE id=?");
 	$sql->execute(array($productid));
 	$products = $sql->fetch(PDO::FETCH_ASSOC);
 	
 	// Retrieving highest bid and bidder
 	
 	if ($auction = $auctions) {
-		$highestBid = $auction['bid'];
-		$highestBidder = $auction['bidder'];
+		$highestBid = $auctions['bid'];
+		$highestBidder = $auctions['bidder'];
 	}
 
 	echo "<h1>Auction Details:</h1>";
@@ -78,7 +77,14 @@ try{
 	// $hours=gmdate("G", $auctions['end'] - time());
 	// $minutes=gmdate("i", $auctions['end'] - time());
 	// echo $hours." hours and ".$minutes." minutes left";
-	echo "<p><a href='bid.php?auctionid=$auctionid'>Bid on Auction</a></p>"; // THIS WILL CHANGE WITH JS
+if($auctions['status']=="active"&&$auctions['owner']!=$_SESSION['username'])
+echo "<p><a href='bid.php?auctionid=$auctionid'>Bid on Auction</a></p>";// THIS WILL CHANGE WITH JS
+	elseif ($auctions['status']!="active") 
+		echo "You can no longer bid on this auction!";
+	
+	include('questionbar.php');
+	
+
 
 	$db=null;
 } catch(PDOExecption $e){
