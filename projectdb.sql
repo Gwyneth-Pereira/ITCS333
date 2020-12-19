@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 16, 2020 at 10:46 PM
+-- Generation Time: Dec 18, 2020 at 08:59 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -49,6 +49,20 @@ INSERT INTO `auctions` (`id`, `owner`, `product`, `start`, `end`, `startprice`, 
 (3, 'admin', 3, '2020-12-14 18:03:38', '2020-12-31 18:03:35', 250.325, NULL, NULL, 'active'),
 (4, 'admin', 4, '2020-12-16 00:33:31', '2020-12-16 00:35:29', 60.5, NULL, NULL, 'pending'),
 (5, 'admin', 5, '2020-12-16 00:39:12', '2020-12-16 00:41:02', 60.5, NULL, NULL, 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
+  `auction` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `message` varchar(200) NOT NULL,
+  `time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -114,11 +128,12 @@ INSERT INTO `products` (`id`, `name`, `details`, `category`) VALUES
 CREATE TABLE `questions` (
   `id` int(11) NOT NULL,
   `product` int(11) NOT NULL,
-  `question` varchar(500) NOT NULL,
+  `question` varchar(300) NOT NULL,
   `asker` varchar(150) NOT NULL,
-  `answer` varchar(500) NOT NULL,
+  `answer` varchar(500) DEFAULT NULL,
   `questiondate` datetime NOT NULL,
-  `answerdate` datetime NOT NULL
+  `answerdate` datetime DEFAULT NULL,
+  `owner` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -171,6 +186,12 @@ ALTER TABLE `auctions`
   ADD KEY `product` (`product`);
 
 --
+-- Indexes for table `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pictures`
 --
 ALTER TABLE `pictures`
@@ -189,7 +210,8 @@ ALTER TABLE `products`
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product` (`product`),
-  ADD KEY `asker` (`asker`);
+  ADD KEY `asker` (`asker`),
+  ADD KEY `prodowner` (`owner`);
 
 --
 -- Indexes for table `transactions`
@@ -215,6 +237,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `auctions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pictures`
@@ -268,6 +296,7 @@ ALTER TABLE `pictures`
 --
 ALTER TABLE `questions`
   ADD CONSTRAINT `asker` FOREIGN KEY (`asker`) REFERENCES `users` (`username`),
+  ADD CONSTRAINT `prodowner` FOREIGN KEY (`owner`) REFERENCES `auctions` (`owner`),
   ADD CONSTRAINT `product` FOREIGN KEY (`product`) REFERENCES `products` (`id`);
 
 --
