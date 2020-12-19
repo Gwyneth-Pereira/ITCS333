@@ -56,22 +56,8 @@ elseif(!isset($_SESSION['active'])) {
 elseif(isset($_SESSION['active']) && $_SESSION['active']){	
 	$username = $_SESSION['username'];
 	echo "<h1 class='text-primary'>Hello $username, Welcome to the Auction System</h1>";
-	?>
-	<form method="POST">
-		<h1>Do you want to Sign Out?!</h1>
-		<p><input type="submit" name="signout" value="Sign Out"></p>
-	</form>
-<?php
-	if (isset($signout)) {
-		$_SESSION['active'] = false;
-		unset($_SESSION['active']);
-		unset($_SESSION['username']);
-		session_destroy();
-		header('location: index.php');
-	}
 }
 ?>
-
 	</div>
 
 	<?php include 'scripts.php'; ?>

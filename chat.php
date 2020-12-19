@@ -13,6 +13,7 @@ if (!isset($_SESSION['active'])) {
 	<meta charset="utf-8">
 	<title>Private Chat</title>
 	<?php include 'head.php'; ?>
+	<link rel="stylesheet" type="text/css" href="css/chatstyle.css">
 </head>
 <body>
 	<?php include 'header.php'; ?>
@@ -55,24 +56,30 @@ try {
     </div>
 	<div id="chatbox">
 	<?php
-	
-	while($r=$row->fetch())
-	{
+	while($r=$row->fetch()) {	
+		if ($r['user']==$_SESSION['username']){
+			$position = 'justify-content-start';
+		}
+		else {
+			$position = 'justify-content-end';
+		}
 		
-		echo "<p ><b>".$r['user']." </b></p>";
-		echo "<p style='font-size:20px'>".$r['message']."</p>";
-				echo "<p style='font-size:10px'>".$r['time']."</p></br>";
-				
-			}
-			echo "<div id='newmsg'>";
-			echo "</div>";
-			?>
+		echo "<div class='d-flex $position border rounded mb-4 mx-0'>";
+		// echo "<p style='font-size:10px'>""</p></br>";
+		// echo "<p class='mb-2'><b class='mr-4'>".$r['user']."</b></p>";
+		echo "<p class='h4 ml-3 mb-0'>".$r['message']."</p>";
+		echo "<p><cite>at: ".$r['time']."</cite></p>";
+		echo "</div>";
+	}
+	echo "<div id='newmsg'>";
+	echo "</div>";
+	?>
 	</div>
-<script>
- document.getElementById('newmsg').scrollIntoView();
-</script>
+	<script>
+		document.getElementById('newmsg').scrollIntoView();
+	</script>
 	<form method="POST">
-	     <input name="usermsg" id="usermsg" type="text" />
+	    <input name="usermsg" id="usermsg" type="text"/>
         <input type="submit" name="submitmsg" id="submit" value="Send"/>
     </form>	
 </div>  

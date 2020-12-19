@@ -52,15 +52,16 @@ if (isset($submit)) {
 		<p class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
         <p>
         	<select class="form-control" type='text' name='category' placeholder="Category">
+				<option value="NULL">Please Select</option>
 				<option>Art</option>
-        	<option>Books</option>
-        	<option>Clothings</option>
-        	<option>Electronics</option>
-        	<option>Health and Beauty</option>
-        	<option>Pets</option>
-        	<option>Vehicles</option>
-        	<option>Video Games</option>
-        	<option>Other</option>
+				<option>Books</option>
+				<option>Clothings</option>
+				<option>Electronics</option>
+				<option>Health and Beauty</option>
+				<option>Pets</option>
+				<option>Vehicles</option>
+				<option>Video Games</option>
+				<option>Other</option>
         	</select>
         </p>
         <p class="h5 text-left font-weight-bold mt-4">Product Details:</p>

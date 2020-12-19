@@ -10,18 +10,14 @@
 <br>
 
 # Agenda
-1. notAuthoraized.php
-1. navbar
-1. myAuctions + marking
-1. republish after failed
-1. regex everywhere 
+1. navbar reviewing
 1. AJAX for validation + everywhere
+
 
 <br>
 
 # Eventually
 1. profile.php
-1. system name
 1. logo and pictures
 1. website information filling
 1. web hosting done by Thursday... max Friday

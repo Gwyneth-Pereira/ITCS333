@@ -98,10 +98,6 @@ extract($_REQUEST);
         }
     </script>
 
-</head>
-<body>
-    <?php include 'header.php'; ?>
-
     <?php
     if(isset($submit)){
         $namepattern="/^[a-zA-Z]{3,}(?:\s[a-zA-Z]{3,})+$/";
@@ -145,15 +141,21 @@ extract($_REQUEST);
             
             $db->commit();
         }
-        catch (PDOException $e){
+        catch (PDOException $ex){
             $db->rollBack();
             echo $ex->getMessage();
+            exit;
         }
         
         header('location: myAuctions.php');
         exit;    
     }
+    ?>
+</head>
+<body>
+    <?php include 'header.php'; ?>
 
+    <?php
     if(isset($auctionid)){
         $msg="";
         if(isset($error)&& $error=='missing'){
@@ -183,7 +185,7 @@ extract($_REQUEST);
             <!-- <p>Address:</p> -->
             <p><textarea class="form-control" required name="address" cols="30" rows="10" placeholder="Delivery Address" onkeyup="checkAddress(this.value)"></textarea><span id='amsg'></span></p>
             <!-- <p>Hidden Auction ID:</p> -->
-            <p><input  type="hidden" name="auctionid" value="$auctionid"/></p>
+            <p><input  type="hidden" name="auctionid" value="<?php echo $auctionid;?>"/></p>
             <input type='hidden' name='JSEnabled' value='FALSE'/>
             <h3 class='text-danger mb-4 mt-4'><?php echo $msg;?></h3>
             <p><input class="btn btn-danger" type="submit" name="submit" value="Complete"></p>

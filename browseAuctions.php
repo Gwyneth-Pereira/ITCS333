@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require('controlled.php');
 // No need here to check logging in... because guests can browse... but not bid... logging verifying should be in bid.php
 // if (!isset($_SESSION['active'])) { 
@@ -7,18 +7,9 @@ require('controlled.php');
 // 	exit;
 // }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Browse Auctions</title>
-	<?php include 'head.php'; ?>
-</head>
-<body>
-	<?php include 'header.php'; ?>
 
 	<div class="container">
-		<h1>This is the browse page</h1>
+		<h1 class="text-center display-4 my-5 pt-5">Browse Auctions</h1>
 	</div>
     <div class="container">
         <div class="row pb-5">
@@ -103,6 +94,6 @@ require('controlled.php');
     </div>
     
 
-	<?php include 'scripts.php'; ?>
-</body>
-</html>
+	
+<!-- </body>
+</html> -->

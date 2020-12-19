@@ -12,11 +12,6 @@ session_start();
 <body>
 	<?php include 'header.php'; ?>
 	
-	<div>
-		<h1>You are not authorized to be here</h1>
-		<h1><a href="login.php">Please Login First From Here</a></h1>
-	</div>
-	
 	<div class="container py-5 mt-5">
 		<div class="row">
 			<div class="col-4 text-right">
@@ -29,7 +24,8 @@ session_start();
 				<br><br>
 				<div class="text-center px-3 px-md-5 mx-3 mx-md-5">
 					<p class="h5">We're not sure what happened to the unicorns, but we have some guesses as to what happened to this page.</p>
-					<p class="h6 mt-4 text-warning font-weight-bold">This page is under construction...<br>We have big plans for this page, so come back often.</p>
+					<p class="h6 my-4 text-warning font-weight-bold">This page is under construction...<br>We have big plans for this page, so come back often.</p>
+					<p class="h4"><a href="login.php" class="text-danger"><u>Please Login From Here</u></a></p>
 				</div>
 			</div>
 		</div>
