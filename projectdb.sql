@@ -139,6 +139,29 @@ CREATE TABLE `questions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `auctionid` int(11) NOT NULL,
+  `buyerRating` float DEFAULT NULL,
+  `sellerRating` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`auctionid`, `buyerRating`, `sellerRating`) VALUES
+(2, 1, 3),
+(8, 1, 3),
+(11, 3, 5),
+(12, 4, 1),
+(13, 5, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -162,7 +185,8 @@ CREATE TABLE `users` (
   `username` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `picture` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -189,7 +213,9 @@ ALTER TABLE `auctions`
 -- Indexes for table `chats`
 --
 ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auction` (`auction`),
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `pictures`
@@ -212,6 +238,12 @@ ALTER TABLE `questions`
   ADD KEY `product` (`product`),
   ADD KEY `asker` (`asker`),
   ADD KEY `prodowner` (`owner`);
+
+--
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`auctionid`);
 
 --
 -- Indexes for table `transactions`
@@ -261,6 +293,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `questions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `auctionid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `transactions`
