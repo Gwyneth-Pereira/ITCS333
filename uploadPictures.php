@@ -3,12 +3,7 @@ require('connection.php');
 extract($_REQUEST);
 
 if(isset($upload)) {
-	// if (!isset($picture)) {
-	// 	echo "Please provide a picture to upload!";
-	// 	exit();
-	// }
-	
-	
+
 	try {
 		
 		// Counting number of pictures
@@ -59,6 +54,19 @@ if (!isset($_SESSION['active'])) {
 	<meta charset="utf-8">
 	<title>Upload Product Pictures</title>
 	<?php include 'head.php'; ?>
+	<!-- <style>
+		footer {
+			background-color: #222;
+			color: #fff;
+			font-size: 14px;
+			bottom: 0;
+			position: fixed;
+			left: 0;
+			right: 0;
+			text-align: center;
+			z-index: 999;
+		}
+	</style> -->
 </head>
 <body>
 	<?php include 'header.php'; ?>
@@ -67,13 +75,21 @@ if (!isset($_SESSION['active'])) {
 		<h1 class="font-weight-bold mb-5">Upload Product Pictures</h1>
 		<form method="POST" class="form-group w-50 mx-auto text-center" enctype="multipart/form-data">
 			
-			<p ><input type="file" name="picture[]" id="picture" class="form-control" accept="image/*" multiple required></p>
+			<p ><input style="margin-top:30%" type="file" name="picture[]" id="picture" class="form-control" accept="image/*" multiple required></p>
 			<div class="mt-5">
 			<input type="submit" class="btn btn-danger" name="upload"  value="Upload Picture"/>
 			<a href="myAuctions.php?message=created" class="btn btn-lg text-primary">Skip For Now</a>
 			</div>
 		</form>
 	</div>
+	<!-- <footer>
+	<p>
+		Created with <i class="fa fa-heart"></i> by
+		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+		- Read how I created this and how you can join the challenge
+		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+	</p>
+</footer> -->
 	
 	
 	<?php include 'scripts.php'; ?>
