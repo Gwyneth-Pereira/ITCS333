@@ -48,7 +48,7 @@ $auctions=null;
 
 if ($prods==null) {
 	echo "No such product exists\n";
-	echo "<a href='browseAuctions.php'>Browse all Products</a>";
+	echo "<a href='index.php#browse'>Browse all Products</a>";
 }
 	}//try
 
