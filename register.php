@@ -6,10 +6,21 @@ session_start();
 <head>
     <meta charset="utf-8">
     <title>Register Page</title>
+    <?php include 'head.php'; ?>
     <link rel="stylesheet" type="text/css" href="css/login.css">
-
 </head>
 <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black px-5 mb-5">
+
+        <a class="navbar-brand" href="index.php"> <img src="images/whitelogo.svg" style="max-width: 4.5rem;"> Auctify</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav navbar-right ml-auto mr-5 align-items-center"> </ul>	
+        </div>
+    </nav>
     
     <?php
     $msg="";
