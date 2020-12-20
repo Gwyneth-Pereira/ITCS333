@@ -125,15 +125,18 @@ if (isset($submit)){
         $msg="Description must be a minimum of 3 and maximum of 200 characters, with at least 3 letters";
     }
 	?>
-	<form method="POST" class="form-group w-25 mx-auto text-center" onSubmit="return checkUserInputs();">
-		<h1 class="font-weight-bold mb-4">Create Auction</h1>
+	<div class="container">
+	<h1 class="font-weight-bold mb-4">Create Auction</h1>
+	
+	<form method="POST" onSubmit="return checkUserInputs();">
+		
         
 		<p class="h5 text-left font-weight-bold mt-4">Product name:</p>
-        <p><input class="form-control" type="text" name="name" placeholder="Product Name" required onkeyup="checkProduct(this.value)"/><span id='pmsg'></span></p>
+        <p><input style="width:55%" class="form-control" type="text" name="name" placeholder="Product Name" required onkeyup="checkProduct(this.value)"/><span id='pmsg'></span></p>
         
-		<p class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
+		<p  class="h5 text-left font-weight-bold mt-4">Cateogry:</p>
         <p>
-        	<select class="form-control" type='text' name='category' placeholder="Category" required>
+        	<select style="width:55%" class="form-control" type='text' name='category' placeholder="Category" required>
 				<option value="null">Please Select</option>
 				<option>Art</option>
 				<option>Books</option>
@@ -147,25 +150,25 @@ if (isset($submit)){
         	</select>
         </p>
         <p class="h5 text-left font-weight-bold mt-4">Product Details:</p>
-        <p><textarea class="form-control" required rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></span></p>
+        <p><textarea style="width:55%"  class="form-control" required rows="5" cols="20" maxlength="200" type='details' name='details' placeholder="Product Details" onkeyup="checkDetails(this.value)"></textarea><span id='dmsg'></span></p>
         
-		<p class="h5 text-left font-weight-bold mt-4">Start Price:</p>
-        <div class="input-group mb-3">
+		<p  class="h5 text-left font-weight-bold mt-4">Start Price:</p>
+        <div class="input-group mb-3" style="width:55%">
 			<div class="input-group-prepend">
 				<span class="input-group-text">BD</span>
 			</div>
-			<input class="form-control" type="number" step="any" name="price" placeholder="Price" required/>
+			<input  class="form-control" type="number" step="any" name="price" placeholder="Price" required/>
 		</div>
         
 		<p class="h5 text-left font-weight-bold mt-4">End Time/Date:</p>
-        <p><input class="form-control" type="datetime-local" id="end" name="end" step="1" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
+        <p><input style="width:55%" class="form-control" type="datetime-local" id="end" name="end" step="1" value="<?php echo date('Y-m-d H:i:s'); ?>" min="<?php echo date('Y-m-d').'T'.date('H:i:s'); ?>"
 		max="<?php echo (date('Y')+1).date('-m-d').'T'.date('H:i:s'); ?>" required></p>
 
         <input type='hidden' name='JSEnabled' value='FALSE'/>
 		<h3 class='text-danger my-4'><?php echo $msg;?></h3>
         <p><input class="btn btn-danger" type="submit" name="submit" value="Create Auction"></p>
     </form>
-	
+	</div>
 	<?php include 'scripts.php'; ?>
 	
 </body>
